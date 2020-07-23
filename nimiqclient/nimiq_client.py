@@ -110,7 +110,7 @@ class NimiqClient:
     def __init__(self, scheme="http", user="", password="", host="127.0.0.1", port=8648, session=None):
         """
         Client initialization.
-        :param scheme: Protocol squeme, `"http"` or `"https"`.
+        :param scheme: Protocol squeme, "http" or "https".
         :param user: Authorized user.
         :param password: Password for the authorized user.
         :param host: Host IP address.
@@ -129,7 +129,7 @@ class NimiqClient:
         Used in all JSONRPC requests to fetch the data.
         :param method: JSONRPC method.
         :param params: Parameters used by the request.
-        :retur: If succesfull, returns the model reperestation of the result, `nil` otherwise.
+        :retur: If succesfull, returns the model reperestation of the result, None otherwise.
         """
 
         # make JSON object to send to the server
@@ -178,7 +178,7 @@ class NimiqClient:
     def consensus(self):
         """
         Returns information on the current consensus state.        
-        :return: Consensus state. `established` is the value for a good state, other values indicate bad.
+        :return: Consensus state. "established" is the value for a good state, other values indicate bad.
         """
         return self.fetch("consensus", [])
 
@@ -186,8 +186,8 @@ class NimiqClient:
         """
         Returns or overrides a constant value.
         When no parameter is given, it returns the value of the constant. When giving a value as parameter,
-        it sets the constant to the given value. To reset the constant use `resetConstant()` instead.
-        :param string: The class and name of the constant (format should be `Class.CONSTANT`).
+        it sets the constant to the given value. To reset the constant use resetConstant() instead.
+        :param string: The class and name of the constant (format should be "Class.CONSTANT").
         :param value: The new value of the constant.
         ;returns: The value of the constant.
         """
@@ -205,7 +205,7 @@ class NimiqClient:
 
     def createRawTransaction(self, transaction):
         """
-        Creates and signs a transaction without sending it. The transaction can then be send via `sendRawTransaction()` without accidentally replaying it.
+        Creates and signs a transaction without sending it. The transaction can then be send via sendRawTransaction() without accidentally replaying it.
         :param transaction: The transaction object.
         :return: Hex-encoded transaction.
         """
@@ -231,8 +231,8 @@ class NimiqClient:
         """
         Returns information about a block by hash.
         :param hash: Hash of the block to gather information on.
-        :param fullTransactions: If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
-        :return: A block object or `nil` when no block was found.
+        :param fullTransactions: If True it returns the full transaction objects, if False only the hashes of the transactions.
+        :return: A block object or None when no block was found.
         """
         return self.fetch("getBlockByHash", [hash, fullTransactions])
 
@@ -240,15 +240,15 @@ class NimiqClient:
         """
         Returns information about a block by block number.
         :param height: The height of the block to gather information on.
-        :param fullTransactions: If `true` it returns the full transaction objects, if `false` only the hashes of the transactions.
-        :return: A block object or `nil` when no block was found.
+        :param fullTransactions: If True it returns the full transaction objects, if False only the hashes of the transactions.
+        :return: A block object or None when no block was found.
         """
         return self.fetch("getBlockByNumber", [height, fullTransactions])
 
     def getBlockTemplate(self, address = None, extraData = ""):
         """
         Returns a template to build the next block for mining. This will consider pool instructions when connected to a pool.
-        If `address` and `extraData` are provided the values are overriden.
+        If address and extraData are provided the values are overriden.
         :param address: The address to use as a miner for this block. This overrides the address provided during startup or from the pool.
         :param extraData: Hex-encoded value for the extra data field. This overrides the extra data provided during startup or from the pool.
         :return: A block template object.
@@ -263,7 +263,7 @@ class NimiqClient:
         """
         Returns the number of transactions in a block from a block matching the given block hash.
         :param hash: Hash of the block.
-        :return: Number of transactions in the block found, or `nil`, when no block was found.
+        :return: Number of transactions in the block found, or None, when no block was found.
         """
         return self.fetch("getBlockTransactionCountByHash", [hash])
 
@@ -271,7 +271,7 @@ class NimiqClient:
         """
         Returns the number of transactions in a block matching the given block number.
         :param height: Height of the block.
-        :return: Number of transactions in the block found, or `nil`, when no block was found.
+        :return: Number of transactions in the block found, or None, when no block was found.
         """
         return self.fetch("getBlockTransactionCountByNumber", [height])
 
@@ -280,7 +280,7 @@ class NimiqClient:
         Returns information about a transaction by block hash and transaction index position.
         :param hash: Hash of the block containing the transaction.
         :param index: Index of the transaction in the block.
-        :return: A transaction object or `nil` when no transaction was found.
+        :return: A transaction object or None when no transaction was found.
         """
         return self.fetch("getTransactionByBlockHashAndIndex", [hash, index])
 
@@ -289,7 +289,7 @@ class NimiqClient:
         Returns information about a transaction by block number and transaction index position.
         :param height: Height of the block containing the transaction.
         :param index: Index of the transaction in the block.
-        :return: A transaction object or `nil` when no transaction was found.
+        :return: A transaction object or None when no transaction was found.
         """
         return self.fetch("getTransactionByBlockNumberAndIndex", [height, index])
 
@@ -297,7 +297,7 @@ class NimiqClient:
         """
         Returns the information about a transaction requested by transaction hash.
         :param hash: Hash of a transaction.
-        :return: A transaction object or `nil` when no transaction was found.
+        :return: A transaction object or None when no transaction was found.
         """
         return self.fetch("getTransactionByHash", [hash])
 
@@ -305,7 +305,7 @@ class NimiqClient:
         """
         Returns the receipt of a transaction by transaction hash.
         :param hash: Hash of a transaction.
-        :return: A transaction receipt object, or `nil` when no receipt was found.
+        :return: A transaction receipt object, or None when no receipt was found.
         """
         return self.fetch("getTransactionReceipt", [hash])
 
@@ -342,9 +342,9 @@ class NimiqClient:
     def log(self, tag, level):
         """
         Sets the log level of the node.
-        :param tag: Tag: If `"*"` the log level is set globally, otherwise the log level is applied only on this tag.
+        :param tag: Tag: If "*" the log level is set globally, otherwise the log level is applied only on this tag.
         :param level: Minimum log level to display.
-        :return: `true` if the log level was changed, `false` otherwise.
+        :return: True if the log level was changed, False otherwise.
         """
         return self.fetch("log", [tag, level])
 
@@ -365,7 +365,7 @@ class NimiqClient:
     def mempoolContent(self, fullTransactions = False):
         """
         Returns transactions that are currently in the mempool.
-        :param fullTransactions: If `true` includes full transactions, if `false` includes only transaction hashes.
+        :param fullTransactions: If True includes full transactions, if False includes only transaction hashes.
         :return: Array of transactions (either represented by the transaction hash or a transaction object).
         """
         return self.fetch("mempoolContent", [fullTransactions])
@@ -409,7 +409,7 @@ class NimiqClient:
         When no parameter is given, it returns the current state.
         When a value is given as parameter, it sets the current state to that value.
         :param state: The state to be set.
-        :return: `true` if the client is mining, otherwise `false`.
+        :return: True if the client is mining, otherwise False.
         """
         params = []
         if state != None:
@@ -450,8 +450,8 @@ class NimiqClient:
         Returns or sets the mining pool.
         When no parameter is given, it returns the current mining pool.
         When a value is given as parameter, it sets the mining pool to that value.
-        :param address: The mining pool connection string (`url:port`) or boolean to enable/disable pool mining.
-        :return: The mining pool connection string, or `nil` if not enabled.
+        :param address: The mining pool connection string ("url:port") or boolean to enable/disable pool mining.
+        :return: The mining pool connection string, or None if not enabled.
         """
         params = []
         if address != None:
@@ -492,14 +492,14 @@ class NimiqClient:
         """
         Submits a block to the node. When the block is valid, the node will forward it to other nodes in the network.
         :param block: Hex-encoded full block (including header, interlink and body). When submitting work from getWork, remember to include the suffix.
-        :return: Always `nil`.
+        :return: Always None.
         """
         return self.fetch("submitBlock", [block])
 
     def syncing(self):
         """
-        Returns an object with data about the sync status or `false`.
-        :return: An object with sync status data or `false`, when not syncing.
+        Returns an object with data about the sync status or False.
+        :return: An object with sync status data or False, when not syncing.
         """
         return self.fetch("syncing", [])
 
