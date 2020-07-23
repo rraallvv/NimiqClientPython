@@ -11,21 +11,10 @@ __all__ = [
     "PoolConnectionState"
 ]
 
-from binascii import hexlify, unhexlify
-
-from decimal import Decimal
-from typing import Union
-
 from itertools import count
-import logging
-
 import requests
 from requests.auth import HTTPBasicAuth
-
 from enum import Enum, IntEnum
-
-logger = logging.getLogger(__name__)
-
 
 class ConsensusState(str, Enum):
     """
