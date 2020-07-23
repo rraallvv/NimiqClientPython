@@ -178,7 +178,7 @@ class NimiqClient:
         it sets the constant to the given value. To reset the constant use resetConstant() instead.
         :param string: The class and name of the constant (format should be "Class.CONSTANT").
         :param value: The new value of the constant.
-        ;returns: The value of the constant.
+        :return: The value of the constant.
         """
         params = [constant]
         if value != None:
