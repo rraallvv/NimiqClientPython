@@ -16,7 +16,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 from enum import Enum, IntEnum
 
-class ConsensusState(str, Enum):
+class ConsensusState(Enum):
     """
     Consensus state returned by the server.
     """
@@ -24,7 +24,7 @@ class ConsensusState(str, Enum):
     SYNCING = "syncing" # Syncing blocks.
     ESTABLISHED = "established" # Consensus established.
 
-class AccountType(IntEnum):
+class AccountType(Enum):
     """
     Type of a Nimiq account.
     """
@@ -32,7 +32,7 @@ class AccountType(IntEnum):
     VESTING = 1 # Vesting contract.
     HTLC = 2 # Hashed Timelock Contract.
 
-class LogLevel(str, Enum):
+class LogLevel(Enum):
     """
     Used to set the log level in the JSONRPC server.
     """
@@ -44,7 +44,7 @@ class LogLevel(str, Enum):
     ERROR = "error" # Error level log.
     ASSERT = "assert" # Assertions level log.
 
-class PeerAddressState(IntEnum):
+class PeerAddressState(Enum):
     """
     Peer address state returned by the server.
     """
@@ -54,7 +54,7 @@ class PeerAddressState(IntEnum):
     FAILED = 4 # Peer failed.
     BANNED = 5 # Balled peer.
 
-class PeerConnectionState(IntEnum):
+class PeerConnectionState(Enum):
     """
     Peer connection state returned by the server.
     """
@@ -65,7 +65,7 @@ class PeerConnectionState(IntEnum):
     ESTABLISHED = 5 # Connection established.
     CLOSED = 6 # Connection closed.
 
-class PeerStateCommand(str, Enum):
+class PeerStateCommand(Enum):
     """
     Commands to change the state of a peer.
     """
@@ -74,7 +74,7 @@ class PeerStateCommand(str, Enum):
     BAN = "ban" # Ban.
     UNBAN = "unban" # Unban.
 
-class PoolConnectionState(IntEnum):
+class PoolConnectionState(Enum):
     """
     Pool connection state information returned by the server.
     """
@@ -166,7 +166,7 @@ class NimiqClient:
 
     def consensus(self):
         """
-        Returns information on the current consensus state.        
+        Returns information on the current consensus state.
         :return: Consensus state. "established" is the value for a good state, other values indicate bad.
         """
         return self.fetch("consensus", [])
@@ -409,7 +409,7 @@ class NimiqClient:
         """
         Returns number of peers currently connected to the client.
         :return: Number of connected peers.
-        """        
+        """
         return self.fetch("peerCount", [])
 
     def peerList(self):

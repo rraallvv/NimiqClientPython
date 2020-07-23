@@ -50,7 +50,7 @@ class TestStringMethods(unittest.TestCase):
         SessionStub.testData = Fixtures.consensusSyncing()
 
         result = self.client.consensus()
-        
+
         self.assertEqual("consensus", SessionStub.latestRequestMethod)
 
         self.assertEqual(ConsensusState.SYNCING, result)
@@ -147,9 +147,9 @@ class TestStringMethods(unittest.TestCase):
 
         transaction = {
             "from": "NQ39 NY67 X0F0 UTQE 0YER 4JEU B67L UPP8 G0FM",
-            "fromType": int(AccountType.BASIC),
+            "fromType": AccountType.BASIC,
             "to": "NQ16 61ET MB3M 2JG6 TBLK BR0D B6EA X6XQ L91U",
-            "toType": int(AccountType.BASIC),
+            "toType": AccountType.BASIC,
             "value": 100000,
             "fee": 1,
             "data": None
@@ -177,9 +177,9 @@ class TestStringMethods(unittest.TestCase):
 
         transaction = {
             "from": "NQ39 NY67 X0F0 UTQE 0YER 4JEU B67L UPP8 G0FM",
-            "fromType": int(AccountType.BASIC),
+            "fromType": AccountType.BASIC,
             "to": "NQ16 61ET MB3M 2JG6 TBLK BR0D B6EA X6XQ L91U",
-            "toType": int(AccountType.BASIC),
+            "toType": AccountType.BASIC,
             "value": 1,
             "fee": 1,
             "data": None
