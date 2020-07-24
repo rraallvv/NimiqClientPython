@@ -92,7 +92,7 @@ class WrongFormatException(Exception):
 class BadMethodCallException(Exception):
     """ The server didn't recognize the method. """
     def __init__(self, message, code):
-        super(BadMethodCallException, self).__init__(f"{message} ({code})")
+        super(BadMethodCallException, self).__init__("{} ({})".format(message, code))
 
 class NimiqClient:
     """
@@ -110,7 +110,7 @@ class NimiqClient:
         :param session: Used to make all requests. If ommited the shared URLSession is used.
         """
         self.id = count(0) # Number in the sequence for the of the next request.
-        self.url = f"{scheme}://{host}:{port}" # URL of the JSONRPC server.
+        self.url = "{}://{}:{port}".format(scheme, host, port) # URL of the JSONRPC server.
         self.auth = HTTPBasicAuth(user, password) # Base64 string containing authentication parameters.
         if session is None:
             session = requests.Session()
@@ -132,7 +132,7 @@ class NimiqClient:
             "id": self.id
         }
 
-        logger.info(f"Request: {call_object}")
+        logger.info("Request: {}".format(call_object))
 
         # make request
         try:
@@ -142,7 +142,7 @@ class NimiqClient:
                 auth = self.auth
             ).json()
 
-            logger.info(f"Response: {resp_object}")
+            logger.info("Response: {}".format(resp_object))
 
         # raise if there are any errors
         except Exception as error:
