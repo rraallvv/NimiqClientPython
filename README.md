@@ -1,4 +1,4 @@
-# Nimiq Client Python
+# Nimiq Client Python [![Build Status](https://travis-ci.org/rraallvv/NimiqClientPython.svg?branch=master)](https://travis-ci.org/rraallvv/NimiqClientPython)
 
 > Python implementation of the Nimiq RPC client specs.
 
