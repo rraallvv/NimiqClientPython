@@ -1,5 +1,3 @@
-__all__ = ["SessionStub"]
-
 class SessionStub():
     testData = None
     latestRequest = None

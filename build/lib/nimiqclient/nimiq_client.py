@@ -14,9 +14,9 @@ __all__ = [
 from itertools import count
 import requests
 from requests.auth import HTTPBasicAuth
-from enum import Enum, IntEnum
+from enum import Enum
 
-class ConsensusState(Enum):
+class ConsensusState(str, Enum):
     """
     Consensus state returned by the server.
     """
@@ -24,7 +24,7 @@ class ConsensusState(Enum):
     SYNCING = "syncing" # Syncing blocks.
     ESTABLISHED = "established" # Consensus established.
 
-class AccountType(Enum):
+class AccountType(int, Enum):
     """
     Type of a Nimiq account.
     """
@@ -32,7 +32,7 @@ class AccountType(Enum):
     VESTING = 1 # Vesting contract.
     HTLC = 2 # Hashed Timelock Contract.
 
-class LogLevel(Enum):
+class LogLevel(str, Enum):
     """
     Used to set the log level in the JSONRPC server.
     """
@@ -44,7 +44,7 @@ class LogLevel(Enum):
     ERROR = "error" # Error level log.
     ASSERT = "assert" # Assertions level log.
 
-class PeerAddressState(Enum):
+class PeerAddressState(int, Enum):
     """
     Peer address state returned by the server.
     """
@@ -54,7 +54,7 @@ class PeerAddressState(Enum):
     FAILED = 4 # Peer failed.
     BANNED = 5 # Balled peer.
 
-class PeerConnectionState(Enum):
+class PeerConnectionState(int, Enum):
     """
     Peer connection state returned by the server.
     """
@@ -65,7 +65,7 @@ class PeerConnectionState(Enum):
     ESTABLISHED = 5 # Connection established.
     CLOSED = 6 # Connection closed.
 
-class PeerStateCommand(Enum):
+class PeerStateCommand(str, Enum):
     """
     Commands to change the state of a peer.
     """
@@ -74,7 +74,7 @@ class PeerStateCommand(Enum):
     BAN = "ban" # Ban.
     UNBAN = "unban" # Unban.
 
-class PoolConnectionState(Enum):
+class PoolConnectionState(int, Enum):
     """
     Pool connection state information returned by the server.
     """

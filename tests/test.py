@@ -1,5 +1,4 @@
 from nimiqclient import *
-from enum import Enum
 import unittest
 from fixtures import Fixtures
 from session_stub import SessionStub
