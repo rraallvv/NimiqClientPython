@@ -15,6 +15,9 @@ from itertools import count
 import requests
 from requests.auth import HTTPBasicAuth
 from enum import Enum
+import logging
+
+logger = logging.getLogger(__name__)
 
 class ConsensusState(str, Enum):
     """
@@ -129,6 +132,8 @@ class NimiqClient:
             "id": self.id
         }
 
+        logger.info(f"Request: {call_object}")
+
         # make request
         try:
             resp_object = self.session.post(
@@ -136,6 +141,8 @@ class NimiqClient:
                 json = call_object,
                 auth = self.auth
             ).json()
+
+            logger.info(f"Response: {resp_object}")
 
         # raise if there are any errors
         except Exception as error:
