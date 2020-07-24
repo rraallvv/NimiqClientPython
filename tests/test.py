@@ -533,7 +533,7 @@ class TestStringMethods(unittest.TestCase):
 
         self.assertEqual("us.sushipool.com:443", result)
 
-    def testGetPoolWhenNoPool(self):
+    def test_getPoolWhenNoPool(self):
         SessionStub.testData = Fixtures.poolNoPool()
 
         result = self.client.pool()
@@ -572,7 +572,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(503371296, result.get("target"))
         self.assertEqual("nimiq-argon2", result.get("algorithm"))
 
-    def testGetWorkWithOverride(self):
+    def test_getWorkWithOverride(self):
         SessionStub.testData = Fixtures.getWork()
 
         result = self.client.getWork("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", "")
@@ -780,7 +780,7 @@ class TestStringMethods(unittest.TestCase):
 
         self.assertEqual(2, result)
 
-    def testGetBlockTransactionCountByNumberWhenNotFound(self):
+    def test_getBlockTransactionCountByNumberWhenNotFound(self):
         SessionStub.testData = Fixtures.blockTransactionCountNotFound()
 
         result = self.client.getBlockTransactionCountByNumber(11608)
