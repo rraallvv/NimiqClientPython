@@ -110,7 +110,7 @@ class NimiqClient:
         :param session: Used to make all requests. If ommited the shared URLSession is used.
         """
         self.id = count(0) # Number in the sequence for the of the next request.
-        self.url = "{}://{}:{port}".format(scheme, host, port) # URL of the JSONRPC server.
+        self.url = "{}://{}:{}".format(scheme, host, port) # URL of the JSONRPC server.
         self.auth = HTTPBasicAuth(user, password) # Base64 string containing authentication parameters.
         if session is None:
             session = requests.Session()
