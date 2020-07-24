@@ -11,7 +11,6 @@ __all__ = [
     "PoolConnectionState"
 ]
 
-from itertools import count
 import requests
 from requests.auth import HTTPBasicAuth
 from enum import Enum
@@ -109,7 +108,7 @@ class NimiqClient:
         :param port: Host port.
         :param session: Used to make all requests. If ommited the shared URLSession is used.
         """
-        self.id = count(0) # Number in the sequence for the of the next request.
+        self.id = 0 # Number in the sequence for the of the next request.
         self.url = "{}://{}:{}".format(scheme, host, port) # URL of the JSONRPC server.
         self.auth = HTTPBasicAuth(user, password) # Base64 string containing authentication parameters.
         if session is None:
@@ -153,7 +152,7 @@ class NimiqClient:
             raise BadMethodCallException(error.get("message"), error.get("code"))
 
         # increase the JSONRPC client request id for the next request
-        next(self.id)
+        self.id += 1
 
         return resp_object.get("result")
 
