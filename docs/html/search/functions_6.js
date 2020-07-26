@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hashrate_83',['hashrate',['../classnimiqclient_1_1nimiq__client_1_1_nimiq_client.html#ad696c47b986e6c71a3319c88726536e8',1,'nimiqclient::nimiq_client::NimiqClient']]]
+  ['log_88',['log',['../classnimiqclient_1_1nimiq__client_1_1_nimiq_client.html#ab65a68a4ae22d122c82feef6de5771b7',1,'nimiqclient::nimiq_client::NimiqClient']]]
 ];

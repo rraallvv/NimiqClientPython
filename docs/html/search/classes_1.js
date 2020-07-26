@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['badmethodcallexception_52',['BadMethodCallException',['../classnimiqclient_1_1nimiq__client_1_1_bad_method_call_exception.html',1,'nimiqclient::nimiq_client']]]
+  ['connectionerrorexception_54',['ConnectionErrorException',['../classnimiqclient_1_1nimiq__client_1_1_connection_error_exception.html',1,'nimiqclient::nimiq_client']]],
+  ['consensusstate_55',['ConsensusState',['../classnimiqclient_1_1nimiq__client_1_1_consensus_state.html',1,'nimiqclient::nimiq_client']]]
 ];

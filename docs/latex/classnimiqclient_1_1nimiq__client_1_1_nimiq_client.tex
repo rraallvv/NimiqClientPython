@@ -5,7 +5,7 @@
 \item 
 def \mbox{\hyperlink{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_aea401b0ddcbcf70866cb5990f61c7387}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, scheme=\char`\"{}http\char`\"{}, user=\char`\"{}\char`\"{}, password=\char`\"{}\char`\"{}, host=\char`\"{}127.\+0.\+0.\+1\char`\"{}, port=8648, session=None)
 \item 
-def \mbox{\hyperlink{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_a81b0a5f1902172f047ffec6caa0255fa}{fetch}} (self, method, $\ast$args)
+def \mbox{\hyperlink{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_ae0eccaeec393b08546a1aa842541af96}{call}} (self, method, $\ast$args)
 \item 
 def \mbox{\hyperlink{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_a3e41290eba3cfe578ab29c364562c3ea}{accounts}} (self)
 \item 
@@ -143,6 +143,17 @@ def \mbox{\hyperlink{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_a37b516c
 \begin{DoxyVerb}Returns the height of most recent block.
 :return: The current block height the client is on.
 \end{DoxyVerb}
+ \mbox{\Hypertarget{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_ae0eccaeec393b08546a1aa842541af96}\label{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_ae0eccaeec393b08546a1aa842541af96}} 
+\index{nimiqclient.nimiq\_client.NimiqClient@{nimiqclient.nimiq\_client.NimiqClient}!call@{call}}
+\index{call@{call}!nimiqclient.nimiq\_client.NimiqClient@{nimiqclient.nimiq\_client.NimiqClient}}
+\doxysubsubsection{\texorpdfstring{call()}{call()}}
+{\footnotesize\ttfamily def nimiqclient.\+nimiq\+\_\+client.\+Nimiq\+Client.\+call (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{method,  }\item[{$\ast$}]{args }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Used in all JSONRPC requests to fetch the data.
+:param method: JSONRPC method.
+:param params: Parameters used by the request.
+:retur: If succesfull, returns the model reperestation of the result, None otherwise.
+\end{DoxyVerb}
  \mbox{\Hypertarget{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_a2127203eb1ba4bb4b345c0eb08e7ceed}\label{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_a2127203eb1ba4bb4b345c0eb08e7ceed}} 
 \index{nimiqclient.nimiq\_client.NimiqClient@{nimiqclient.nimiq\_client.NimiqClient}!consensus@{consensus}}
 \index{consensus@{consensus}!nimiqclient.nimiq\_client.NimiqClient@{nimiqclient.nimiq\_client.NimiqClient}}
@@ -183,17 +194,6 @@ it sets the constant to the given value. To reset the constant use resetConstant
 \begin{DoxyVerb}Creates and signs a transaction without sending it. The transaction can then be send via sendRawTransaction() without accidentally replaying it.
 :param transaction: The transaction object.
 :return: Hex-encoded transaction.
-\end{DoxyVerb}
- \mbox{\Hypertarget{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_a81b0a5f1902172f047ffec6caa0255fa}\label{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_a81b0a5f1902172f047ffec6caa0255fa}} 
-\index{nimiqclient.nimiq\_client.NimiqClient@{nimiqclient.nimiq\_client.NimiqClient}!fetch@{fetch}}
-\index{fetch@{fetch}!nimiqclient.nimiq\_client.NimiqClient@{nimiqclient.nimiq\_client.NimiqClient}}
-\doxysubsubsection{\texorpdfstring{fetch()}{fetch()}}
-{\footnotesize\ttfamily def nimiqclient.\+nimiq\+\_\+client.\+Nimiq\+Client.\+fetch (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{method,  }\item[{$\ast$}]{args }\end{DoxyParamCaption})}
-
-\begin{DoxyVerb}Used in all JSONRPC requests to fetch the data.
-:param method: JSONRPC method.
-:param params: Parameters used by the request.
-:retur: If succesfull, returns the model reperestation of the result, None otherwise.
 \end{DoxyVerb}
  \mbox{\Hypertarget{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_ade8486d891a7d6715121472e8d0b9a59}\label{classnimiqclient_1_1nimiq__client_1_1_nimiq_client_ade8486d891a7d6715121472e8d0b9a59}} 
 \index{nimiqclient.nimiq\_client.NimiqClient@{nimiqclient.nimiq\_client.NimiqClient}!getAccount@{getAccount}}

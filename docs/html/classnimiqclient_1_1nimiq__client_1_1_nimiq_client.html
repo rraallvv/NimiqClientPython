@@ -78,8 +78,8 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aea401b0ddcbcf70866cb5990f61c7387"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnimiqclient_1_1nimiq__client_1_1_nimiq_client.html#aea401b0ddcbcf70866cb5990f61c7387">__init__</a> (self, scheme=&quot;http&quot;, user=&quot;&quot;, password=&quot;&quot;, host=&quot;127.0.0.1&quot;, port=8648, session=None)</td></tr>
 <tr class="separator:aea401b0ddcbcf70866cb5990f61c7387"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81b0a5f1902172f047ffec6caa0255fa"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnimiqclient_1_1nimiq__client_1_1_nimiq_client.html#a81b0a5f1902172f047ffec6caa0255fa">fetch</a> (self, method, *args)</td></tr>
-<tr class="separator:a81b0a5f1902172f047ffec6caa0255fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0eccaeec393b08546a1aa842541af96"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnimiqclient_1_1nimiq__client_1_1_nimiq_client.html#ae0eccaeec393b08546a1aa842541af96">call</a> (self, method, *args)</td></tr>
+<tr class="separator:ae0eccaeec393b08546a1aa842541af96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e41290eba3cfe578ab29c364562c3ea"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnimiqclient_1_1nimiq__client_1_1_nimiq_client.html#a3e41290eba3cfe578ab29c364562c3ea">accounts</a> (self)</td></tr>
 <tr class="separator:a3e41290eba3cfe578ab29c364562c3ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa52472e75a435b093c667f5dc83d8db1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnimiqclient_1_1nimiq__client_1_1_nimiq_client.html#aa52472e75a435b093c667f5dc83d8db1">blockNumber</a> (self)</td></tr>
@@ -283,6 +283,44 @@ Public Attributes</h2></td></tr>
 </pre> 
 </div>
 </div>
+<a id="ae0eccaeec393b08546a1aa842541af96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0eccaeec393b08546a1aa842541af96">&#9670;&nbsp;</a></span>call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nimiqclient.nimiq_client.NimiqClient.call </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>method</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Used in all JSONRPC requests to fetch the data.
+:param method: JSONRPC method.
+:param params: Parameters used by the request.
+:retur: If succesfull, returns the model reperestation of the result, None otherwise.
+</pre> 
+</div>
+</div>
 <a id="a2127203eb1ba4bb4b345c0eb08e7ceed"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2127203eb1ba4bb4b345c0eb08e7ceed">&#9670;&nbsp;</a></span>consensus()</h2>
 
@@ -391,44 +429,6 @@ it sets the constant to the given value. To reset the constant use resetConstant
 <pre class="fragment">Creates and signs a transaction without sending it. The transaction can then be send via sendRawTransaction() without accidentally replaying it.
 :param transaction: The transaction object.
 :return: Hex-encoded transaction.
-</pre> 
-</div>
-</div>
-<a id="a81b0a5f1902172f047ffec6caa0255fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81b0a5f1902172f047ffec6caa0255fa">&#9670;&nbsp;</a></span>fetch()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def nimiqclient.nimiq_client.NimiqClient.fetch </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>method</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">*&#160;</td>
-          <td class="paramname"><em>args</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Used in all JSONRPC requests to fetch the data.
-:param method: JSONRPC method.
-:param params: Parameters used by the request.
-:retur: If succesfull, returns the model reperestation of the result, None otherwise.
 </pre> 
 </div>
 </div>
