@@ -131,8 +131,7 @@ class Edict(dict):
         if isinstance(obj, dict):
             return Edict(obj)
         elif isinstance(obj, (tuple, list, set, frozenset)):
-            result = type(obj)([Edict.wrap(v) for v in obj])
-            return result
+            return type(obj)([Edict.wrap(v) for v in obj])
         else:
             return obj
 
