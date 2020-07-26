@@ -1,7 +1,9 @@
 __all__ = [
     "NimiqClient",
-    "WrongFormatException",
-    "BadMethodCallException",
+    "Edict",
+    "InternalErrorException",
+    "RemoteErrorException",
+    "ConnectionErrorException",
     "ConsensusState",
     "AccountType",
     "LogLevel",
@@ -84,14 +86,55 @@ class PoolConnectionState(int, Enum):
     CONNECTING = 1 # Connecting.
     CLOSED = 2 # Closed.
 
-class WrongFormatException(Exception):
-    """ The client couldn't parse the JSON object. """
+class InternalErrorException(Exception):
+    """
+    Internal error during a JSON RPC request.
+    """
     pass
 
-class BadMethodCallException(Exception):
-    """ The server didn't recognize the method. """
+class RemoteErrorException(Exception):
+    """
+    Exception on the remote server.
+    """
     def __init__(self, message, code):
-        super(BadMethodCallException, self).__init__("{} ({})".format(message, code))
+        super(RemoteErrorException, self).__init__("{} ({})".format(message, code))
+
+class ConnectionErrorException(Exception):
+    """
+    Error with connection.
+    """
+    pass
+
+class Edict(dict):
+    """
+    Enhanced dictionary to support dot notation in the client object responces.
+    """
+    def __init__(self, obj):
+        for key, value in obj.items():
+            setattr(self, key, Edict.wrap(value))
+
+    def __getattr__(self, attr):
+        if attr.endswith("_"):
+            attr = attr[:-1]
+        if attr in self:
+            return super().__getitem__(attr)
+        else:
+            return None
+
+    def __setattr__(self, key, value):
+        if key.endswith("_"):
+            key = key[:-1]
+        super().__setitem__(key, value)
+
+    @staticmethod
+    def wrap(obj):
+        if isinstance(obj, dict):
+            return Edict(obj)
+        elif isinstance(obj, (tuple, list, set, frozenset)):
+            result = type(obj)([Edict.wrap(v) for v in obj])
+            return result
+        else:
+            return obj
 
 class NimiqClient:
     """
@@ -115,7 +158,7 @@ class NimiqClient:
             session = requests.Session()
         self.session = session # requests Session instance used in requests sent to the JSONRPC server.
 
-    def fetch(self, method, *args):
+    def call(self, method, *args):
         """
         Used in all JSONRPC requests to fetch the data.
         :param method: JSONRPC method.
@@ -145,37 +188,40 @@ class NimiqClient:
 
         # raise if there are any errors
         except Exception as error:
-            raise WrongFormatException(error)
+            if error is requests.exceptions.RequestException:
+                raise ConnectionErrorException(error)
+            else:
+                raise InternalErrorException(error)
 
         error = resp_object.get("error")
         if error is not None:
-            raise BadMethodCallException(error.get("message"), error.get("code"))
+            raise RemoteErrorException(error.get("message"), error.get("code"))
 
         # increase the JSONRPC client request id for the next request
         self.id += 1
 
-        return resp_object.get("result")
+        return Edict.wrap(resp_object.get("result"))
 
     def accounts(self):
         """
         Returns a list of addresses owned by client.
         :return: Array of Accounts owned by the client.
         """
-        return self.fetch("accounts", [])
+        return self.call("accounts", [])
 
     def blockNumber(self):
         """
         Returns the height of most recent block.
         :return: The current block height the client is on.
         """
-        return self.fetch("blockNumber", [])
+        return self.call("blockNumber", [])
 
     def consensus(self):
         """
         Returns information on the current consensus state.
         :return: Consensus state. "established" is the value for a good state, other values indicate bad.
         """
-        return self.fetch("consensus", [])
+        return self.call("consensus", [])
 
     def constant(self, constant, value = None):
         """
@@ -189,14 +235,14 @@ class NimiqClient:
         params = [constant]
         if value != None:
             params.append(value)
-        return self.fetch("constant", params)
+        return self.call("constant", params)
 
     def createAccount(self):
         """
         Creates a new account and stores its private key in the client store.
         :return: Information on the wallet that was created using the command.
         """
-        return self.fetch("createAccount", [])
+        return self.call("createAccount", [])
 
     def createRawTransaction(self, transaction):
         """
@@ -204,7 +250,7 @@ class NimiqClient:
         :param transaction: The transaction object.
         :return: Hex-encoded transaction.
         """
-        return self.fetch("createRawTransaction", [transaction])
+        return self.call("createRawTransaction", [transaction])
 
     def getAccount(self, address):
         """
@@ -212,7 +258,7 @@ class NimiqClient:
         :param address: Address to get account details.
         :return: Details about the account. Returns the default empty basic account for non-existing accounts.
         """
-        return self.fetch("getAccount", [address])
+        return self.call("getAccount", [address])
 
     def getBalance(self, address):
         """
@@ -220,7 +266,7 @@ class NimiqClient:
         :param address: Address to check for balance.
         :return: The current balance at the specified address (in smalest unit).
         """
-        return self.fetch("getBalance", [address])
+        return self.call("getBalance", [address])
 
     def getBlockByHash(self, hash, fullTransactions = False):
         """
@@ -229,7 +275,7 @@ class NimiqClient:
         :param fullTransactions: If True it returns the full transaction objects, if False only the hashes of the transactions.
         :return: A block object or None when no block was found.
         """
-        return self.fetch("getBlockByHash", [hash, fullTransactions])
+        return self.call("getBlockByHash", [hash, fullTransactions])
 
     def getBlockByNumber(self, height, fullTransactions = False):
         """
@@ -238,7 +284,7 @@ class NimiqClient:
         :param fullTransactions: If True it returns the full transaction objects, if False only the hashes of the transactions.
         :return: A block object or None when no block was found.
         """
-        return self.fetch("getBlockByNumber", [height, fullTransactions])
+        return self.call("getBlockByNumber", [height, fullTransactions])
 
     def getBlockTemplate(self, address = None, extraData = ""):
         """
@@ -252,7 +298,7 @@ class NimiqClient:
         if address != None:
             params.append(address)
             params.append(extraData)
-        return self.fetch("getBlockTemplate", params)
+        return self.call("getBlockTemplate", params)
 
     def getBlockTransactionCountByHash(self, hash):
         """
@@ -260,7 +306,7 @@ class NimiqClient:
         :param hash: Hash of the block.
         :return: Number of transactions in the block found, or None, when no block was found.
         """
-        return self.fetch("getBlockTransactionCountByHash", [hash])
+        return self.call("getBlockTransactionCountByHash", [hash])
 
     def getBlockTransactionCountByNumber(self, height):
         """
@@ -268,7 +314,7 @@ class NimiqClient:
         :param height: Height of the block.
         :return: Number of transactions in the block found, or None, when no block was found.
         """
-        return self.fetch("getBlockTransactionCountByNumber", [height])
+        return self.call("getBlockTransactionCountByNumber", [height])
 
     def getTransactionByBlockHashAndIndex(self, hash, index):
         """
@@ -277,7 +323,7 @@ class NimiqClient:
         :param index: Index of the transaction in the block.
         :return: A transaction object or None when no transaction was found.
         """
-        return self.fetch("getTransactionByBlockHashAndIndex", [hash, index])
+        return self.call("getTransactionByBlockHashAndIndex", [hash, index])
 
     def getTransactionByBlockNumberAndIndex(self, height, index):
         """
@@ -286,7 +332,7 @@ class NimiqClient:
         :param index: Index of the transaction in the block.
         :return: A transaction object or None when no transaction was found.
         """
-        return self.fetch("getTransactionByBlockNumberAndIndex", [height, index])
+        return self.call("getTransactionByBlockNumberAndIndex", [height, index])
 
     def getTransactionByHash(self, hash):
         """
@@ -294,7 +340,7 @@ class NimiqClient:
         :param hash: Hash of a transaction.
         :return: A transaction object or None when no transaction was found.
         """
-        return self.fetch("getTransactionByHash", [hash])
+        return self.call("getTransactionByHash", [hash])
 
     def getTransactionReceipt(self, hash):
         """
@@ -302,7 +348,7 @@ class NimiqClient:
         :param hash: Hash of a transaction.
         :return: A transaction receipt object, or None when no receipt was found.
         """
-        return self.fetch("getTransactionReceipt", [hash])
+        return self.call("getTransactionReceipt", [hash])
 
     def getTransactionsByAddress(self, address, numberOfTransactions = 1000):
         """
@@ -312,7 +358,7 @@ class NimiqClient:
         :param numberOfTransactions: Number of transactions that shall be returned.
         :return: Array of transactions linked to the requested address.
         """
-        return self.fetch("getTransactionsByAddress", [address, numberOfTransactions])
+        return self.call("getTransactionsByAddress", [address, numberOfTransactions])
 
     def getWork(self, address = None, extraData = ""):
         """
@@ -325,14 +371,14 @@ class NimiqClient:
         if address != None:
             params.append(address)
             params.append(extraData)
-        return self.fetch("getWork", params)
+        return self.call("getWork", params)
 
     def hashrate(self):
         """
         Returns the number of hashes per second that the node is mining with.
         :return: Number of hashes per second.
         """
-        return self.fetch("hashrate", [])
+        return self.call("hashrate", [])
 
     def log(self, tag, level):
         """
@@ -341,14 +387,14 @@ class NimiqClient:
         :param level: Minimum log level to display.
         :return: True if the log level was changed, False otherwise.
         """
-        return self.fetch("log", [tag, level])
+        return self.call("log", [tag, level])
 
     def mempool(self):
         """
         Returns information on the current mempool situation. This will provide an overview of the number of transactions sorted into buckets based on their fee per byte (in smallest unit).
         :return: Mempool information.
         """
-        result = self.fetch("mempool", [])
+        result = self.call("mempool", [])
         transactionsPerBucket = {}
         for key, value in list(result.items()):
             if key.isdigit():
@@ -363,14 +409,14 @@ class NimiqClient:
         :param fullTransactions: If True includes full transactions, if False includes only transaction hashes.
         :return: Array of transactions (either represented by the transaction hash or a transaction object).
         """
-        return self.fetch("mempoolContent", [fullTransactions])
+        return self.call("mempoolContent", [fullTransactions])
 
     def minerAddress(self):
         """
         Returns the miner address.
         :return: The miner address configured on the node.
         """
-        return self.fetch("minerAddress", [])
+        return self.call("minerAddress", [])
 
     def minerThreads(self, threads = None):
         """
@@ -383,7 +429,7 @@ class NimiqClient:
         params = []
         if threads != None:
             params.append(threads)
-        return self.fetch("minerThreads", params)
+        return self.call("minerThreads", params)
 
     def minFeePerByte(self, fee = None):
         """
@@ -396,7 +442,7 @@ class NimiqClient:
         params = []
         if fee != None:
             params.append(fee)
-        return self.fetch("minFeePerByte", params)
+        return self.call("minFeePerByte", params)
 
     def mining(self, state = None):
         """
@@ -409,21 +455,21 @@ class NimiqClient:
         params = []
         if state != None:
             params.append(state)
-        return self.fetch("mining", params)
+        return self.call("mining", params)
 
     def peerCount(self):
         """
         Returns number of peers currently connected to the client.
         :return: Number of connected peers.
         """
-        return self.fetch("peerCount", [])
+        return self.call("peerCount", [])
 
     def peerList(self):
         """
         Returns list of peers known to the client.
         :return: The list of peers.
         """
-        return self.fetch("peerList", [])
+        return self.call("peerList", [])
 
     def peerState(self, address, command = None):
         """
@@ -438,7 +484,7 @@ class NimiqClient:
         params.append(address)
         if command != None:
             params.append(command)
-        return self.fetch("peerState", params)
+        return self.call("peerState", params)
 
     def pool(self, address = None):
         """
@@ -451,21 +497,21 @@ class NimiqClient:
         params = []
         if address != None:
             params.append(address)
-        return self.fetch("pool", params)
+        return self.call("pool", params)
 
     def poolConfirmedBalance(self):
         """
         Returns the confirmed mining pool balance.
         :return: The confirmed mining pool balance (in smallest unit).
         """
-        return self.fetch("poolConfirmedBalance", [])
+        return self.call("poolConfirmedBalance", [])
 
     def poolConnectionState(self):
         """
         Returns the connection state to mining pool.
         :return: The mining pool connection state.
         """
-        return self.fetch("poolConnectionState", [])
+        return self.call("poolConnectionState", [])
 
     def sendRawTransaction(self, transaction):
         """
@@ -473,7 +519,7 @@ class NimiqClient:
         :param transaction: The hex encoded signed transaction
         :return: The Hex-encoded transaction hash.
         """
-        return self.fetch("sendRawTransaction", [transaction])
+        return self.call("sendRawTransaction", [transaction])
 
     def sendTransaction(self, transaction):
         """
@@ -481,7 +527,7 @@ class NimiqClient:
         :param transaction: The hex encoded signed transaction
         :return: The Hex-encoded transaction hash.
         """
-        return self.fetch("sendTransaction", [transaction])
+        return self.call("sendTransaction", [transaction])
 
     def submitBlock(self, block):
         """
@@ -489,14 +535,14 @@ class NimiqClient:
         :param block: Hex-encoded full block (including header, interlink and body). When submitting work from getWork, remember to include the suffix.
         :return: Always None.
         """
-        return self.fetch("submitBlock", [block])
+        return self.call("submitBlock", [block])
 
     def syncing(self):
         """
         Returns an object with data about the sync status or False.
         :return: An object with sync status data or False, when not syncing.
         """
-        return self.fetch("syncing", [])
+        return self.call("syncing", [])
 
     def getRawTransactionInfo(self, transaction):
         """
@@ -504,7 +550,7 @@ class NimiqClient:
         :param transaction: The hex encoded signed transaction.
         :return: The transaction object.
         """
-        return self.fetch("getRawTransactionInfo", [transaction])
+        return self.call("getRawTransactionInfo", [transaction])
 
     def resetConstant(self, constant):
         """
@@ -512,4 +558,4 @@ class NimiqClient:
         :param constant: Name of the constant.
         :return: The new value of the constant.
         """
-        return self.fetch("constant", [constant, "reset"])
+        return self.call("constant", [constant, "reset"])

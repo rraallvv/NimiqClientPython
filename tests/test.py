@@ -31,9 +31,9 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("syncing", SessionStub.latestRequestMethod)
 
         self.assertIsNot(type(result), bool)
-        self.assertEqual(578430, result.get("startingBlock"))
-        self.assertEqual(586493, result.get("currentBlock"))
-        self.assertEqual(586493, result.get("highestBlock"))
+        self.assertEqual(578430, result.startingBlock)
+        self.assertEqual(586493, result.currentBlock)
+        self.assertEqual(586493, result.highestBlock)
 
     def test_syncingStateWhenNotSyncing(self):
         SessionStub.testData = Fixtures.syncingNotSyncing()
@@ -63,16 +63,16 @@ class TestStringMethods(unittest.TestCase):
 
         self.assertEqual(len(result), 2)
         self.assertIsNotNone(result[0])
-        self.assertEqual("b99034c552e9c0fd34eb95c1cdf17f5e", result[0].get("id"))
-        self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", result[0].get("address"))
-        self.assertEqual(PeerAddressState.ESTABLISHED, result[0].get("addressState"))
-        self.assertEqual(PeerConnectionState.ESTABLISHED, result[0].get("connectionState"))
+        self.assertEqual("b99034c552e9c0fd34eb95c1cdf17f5e", result[0].id)
+        self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", result[0].address)
+        self.assertEqual(PeerAddressState.ESTABLISHED, result[0].addressState)
+        self.assertEqual(PeerConnectionState.ESTABLISHED, result[0].connectionState)
 
         self.assertIsNotNone(result[1])
-        self.assertEqual("e37dca72802c972d45b37735e9595cf0", result[1].get("id"))
-        self.assertEqual("wss://seed4.nimiq-testnet.com:8080/e37dca72802c972d45b37735e9595cf0", result[1].get("address"))
-        self.assertEqual(PeerAddressState.FAILED, result[1].get("addressState"))
-        self.assertEqual(None, result[1].get("connectionState"))
+        self.assertEqual("e37dca72802c972d45b37735e9595cf0", result[1].id)
+        self.assertEqual("wss://seed4.nimiq-testnet.com:8080/e37dca72802c972d45b37735e9595cf0", result[1].address)
+        self.assertEqual(PeerAddressState.FAILED, result[1].addressState)
+        self.assertEqual(None, result[1].connectionState)
 
     def test_peerListWhenEmpty(self):
         SessionStub.testData = Fixtures.peerListEmpty()
@@ -92,10 +92,10 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", SessionStub.latestRequestParams[0])
 
         self.assertIsNotNone(result)
-        self.assertEqual("b99034c552e9c0fd34eb95c1cdf17f5e", result.get("id"))
-        self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", result.get("address"))
-        self.assertEqual(PeerAddressState.ESTABLISHED, result.get("addressState"))
-        self.assertEqual(PeerConnectionState.ESTABLISHED, result.get("connectionState"))
+        self.assertEqual("b99034c552e9c0fd34eb95c1cdf17f5e", result.id)
+        self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", result.address)
+        self.assertEqual(PeerAddressState.ESTABLISHED, result.addressState)
+        self.assertEqual(PeerConnectionState.ESTABLISHED, result.connectionState)
 
     def test_peerFailed(self):
         SessionStub.testData = Fixtures.peerStateFailed()
@@ -106,15 +106,15 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("wss://seed4.nimiq-testnet.com:8080/e37dca72802c972d45b37735e9595cf0", SessionStub.latestRequestParams[0])
 
         self.assertIsNotNone(result)
-        self.assertEqual("e37dca72802c972d45b37735e9595cf0", result.get("id"))
-        self.assertEqual("wss://seed4.nimiq-testnet.com:8080/e37dca72802c972d45b37735e9595cf0", result.get("address"))
-        self.assertEqual(PeerAddressState.FAILED, result.get("addressState"))
-        self.assertEqual(None, result.get("connectionState"))
+        self.assertEqual("e37dca72802c972d45b37735e9595cf0", result.id)
+        self.assertEqual("wss://seed4.nimiq-testnet.com:8080/e37dca72802c972d45b37735e9595cf0", result.address)
+        self.assertEqual(PeerAddressState.FAILED, result.addressState)
+        self.assertEqual(None, result.connectionState)
 
     def test_peerError(self):
         SessionStub.testData = Fixtures.peerStateError()
 
-        self.assertRaises(BadMethodCallException, self.client.peerState, "unknown")
+        self.assertRaises(RemoteErrorException, self.client.peerState, "unknown")
 
     def test_setPeerNormal(self):
         SessionStub.testData = Fixtures.peerStateNormal()
@@ -126,10 +126,10 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("connect", SessionStub.latestRequestParams[1])
 
         self.assertIsNotNone(result)
-        self.assertEqual("b99034c552e9c0fd34eb95c1cdf17f5e", result.get("id"))
-        self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", result.get("address"))
-        self.assertEqual(PeerAddressState.ESTABLISHED, result.get("addressState"))
-        self.assertEqual(PeerConnectionState.ESTABLISHED, result.get("connectionState"))
+        self.assertEqual("b99034c552e9c0fd34eb95c1cdf17f5e", result.id)
+        self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", result.address)
+        self.assertEqual(PeerAddressState.ESTABLISHED, result.addressState)
+        self.assertEqual(PeerConnectionState.ESTABLISHED, result.connectionState)
 
     def test_sendRawTransaction(self):
         SessionStub.testData = Fixtures.sendTransaction()
@@ -210,13 +210,13 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("00c3c0d1af80b84c3b3de4e3d79d5c8cc950e044098c969953d68bf9cee68d7b53305dbaac7514a06dae935e40d599caf1bd8a243c00000000000186a00000000000000001000af84c01239b16cee089836c2af5c7b1dbb22cdc0b4864349f7f3805909aa8cf24e4c1ff0461832e86f3624778a867d5f2ba318f92918ada7ae28d70d40c4ef1d6413802", SessionStub.latestRequestParams[0])
 
         self.assertIsNotNone(result)
-        self.assertEqual("7784f2f6eaa076fa5cf0e4d06311ad204b2f485de622231785451181e8129091", result.get("hash"))
-        self.assertEqual("b7cc7f01e0e6f0e07dd9249dc598f4e5ee8801f5", result.get("from"))
-        self.assertEqual("NQ39 NY67 X0F0 UTQE 0YER 4JEU B67L UPP8 G0FM", result.get("fromAddress"))
-        self.assertEqual("305dbaac7514a06dae935e40d599caf1bd8a243c", result.get("to"))
-        self.assertEqual("NQ16 61ET MB3M 2JG6 TBLK BR0D B6EA X6XQ L91U", result.get("toAddress"))
-        self.assertEqual(100000, result.get("value"))
-        self.assertEqual(1, result.get("fee"))
+        self.assertEqual("7784f2f6eaa076fa5cf0e4d06311ad204b2f485de622231785451181e8129091", result.hash)
+        self.assertEqual("b7cc7f01e0e6f0e07dd9249dc598f4e5ee8801f5", result.from_)
+        self.assertEqual("NQ39 NY67 X0F0 UTQE 0YER 4JEU B67L UPP8 G0FM", result.fromAddress)
+        self.assertEqual("305dbaac7514a06dae935e40d599caf1bd8a243c", result.to)
+        self.assertEqual("NQ16 61ET MB3M 2JG6 TBLK BR0D B6EA X6XQ L91U", result.toAddress)
+        self.assertEqual(100000, result.value)
+        self.assertEqual(1, result.fee)
 
     def test_getTransactionByBlockHashAndIndex(self):
         SessionStub.testData = Fixtures.getTransactionFull()
@@ -228,15 +228,15 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(0, SessionStub.latestRequestParams[1])
 
         self.assertIsNotNone(result)
-        self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", result.get("hash"))
-        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.get("blockHash"))
-        self.assertEqual(0, result.get("transactionIndex"))
-        self.assertEqual("355b4fe2304a9c818b9f0c3c1aaaf4ad4f6a0279", result.get("from"))
-        self.assertEqual("NQ16 6MDL YQHG 9AE8 32UY 1GX1 MAPL MM7N L0KR", result.get("fromAddress"))
-        self.assertEqual("4f61c06feeb7971af6997125fe40d629c01af92f", result.get("to"))
-        self.assertEqual("NQ05 9VGU 0TYE NXBH MVLR E4JY UG6N 5701 MX9F", result.get("toAddress"))
-        self.assertEqual(2636710000, result.get("value"))
-        self.assertEqual(0, result.get("fee"))
+        self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", result.hash)
+        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.blockHash)
+        self.assertEqual(0, result.transactionIndex)
+        self.assertEqual("355b4fe2304a9c818b9f0c3c1aaaf4ad4f6a0279", result.from_)
+        self.assertEqual("NQ16 6MDL YQHG 9AE8 32UY 1GX1 MAPL MM7N L0KR", result.fromAddress)
+        self.assertEqual("4f61c06feeb7971af6997125fe40d629c01af92f", result.to)
+        self.assertEqual("NQ05 9VGU 0TYE NXBH MVLR E4JY UG6N 5701 MX9F", result.toAddress)
+        self.assertEqual(2636710000, result.value)
+        self.assertEqual(0, result.fee)
 
     def test_getTransactionByBlockHashAndIndexWhenNotFound(self):
         SessionStub.testData = Fixtures.getTransactionNotFound()
@@ -259,15 +259,15 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(0, SessionStub.latestRequestParams[1])
 
         self.assertIsNotNone(result)
-        self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", result.get("hash"))
-        self.assertEqual(11608, result.get("blockNumber"))
-        self.assertEqual(0, result.get("transactionIndex"))
-        self.assertEqual("355b4fe2304a9c818b9f0c3c1aaaf4ad4f6a0279", result.get("from"))
-        self.assertEqual("NQ16 6MDL YQHG 9AE8 32UY 1GX1 MAPL MM7N L0KR", result.get("fromAddress"))
-        self.assertEqual("4f61c06feeb7971af6997125fe40d629c01af92f", result.get("to"))
-        self.assertEqual("NQ05 9VGU 0TYE NXBH MVLR E4JY UG6N 5701 MX9F", result.get("toAddress"))
-        self.assertEqual(2636710000, result.get("value"))
-        self.assertEqual(0, result.get("fee"))
+        self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", result.hash)
+        self.assertEqual(11608, result.blockNumber)
+        self.assertEqual(0, result.transactionIndex)
+        self.assertEqual("355b4fe2304a9c818b9f0c3c1aaaf4ad4f6a0279", result.from_)
+        self.assertEqual("NQ16 6MDL YQHG 9AE8 32UY 1GX1 MAPL MM7N L0KR", result.fromAddress)
+        self.assertEqual("4f61c06feeb7971af6997125fe40d629c01af92f", result.to)
+        self.assertEqual("NQ05 9VGU 0TYE NXBH MVLR E4JY UG6N 5701 MX9F", result.toAddress)
+        self.assertEqual(2636710000, result.value)
+        self.assertEqual(0, result.fee)
 
     def test_getTransactionByBlockNumberAndIndexWhenNotFound(self):
         SessionStub.testData = Fixtures.getTransactionNotFound()
@@ -289,14 +289,14 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", SessionStub.latestRequestParams[0])
 
         self.assertIsNotNone(result)
-        self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", result.get("hash"))
-        self.assertEqual(11608, result.get("blockNumber"))
-        self.assertEqual("355b4fe2304a9c818b9f0c3c1aaaf4ad4f6a0279", result.get("from"))
-        self.assertEqual("NQ16 6MDL YQHG 9AE8 32UY 1GX1 MAPL MM7N L0KR", result.get("fromAddress"))
-        self.assertEqual("4f61c06feeb7971af6997125fe40d629c01af92f", result.get("to"))
-        self.assertEqual("NQ05 9VGU 0TYE NXBH MVLR E4JY UG6N 5701 MX9F", result.get("toAddress"))
-        self.assertEqual(2636710000, result.get("value"))
-        self.assertEqual(0, result.get("fee"))
+        self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", result.hash)
+        self.assertEqual(11608, result.blockNumber)
+        self.assertEqual("355b4fe2304a9c818b9f0c3c1aaaf4ad4f6a0279", result.from_)
+        self.assertEqual("NQ16 6MDL YQHG 9AE8 32UY 1GX1 MAPL MM7N L0KR", result.fromAddress)
+        self.assertEqual("4f61c06feeb7971af6997125fe40d629c01af92f", result.to)
+        self.assertEqual("NQ05 9VGU 0TYE NXBH MVLR E4JY UG6N 5701 MX9F", result.toAddress)
+        self.assertEqual(2636710000, result.value)
+        self.assertEqual(0, result.fee)
 
     def test_getTransactionByHashWhenNotFound(self):
         SessionStub.testData = Fixtures.getTransactionNotFound()
@@ -317,19 +317,19 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("539f6172b19f63be376ab7e962c368bb5f611deff6b159152c4cdf509f7daad2", SessionStub.latestRequestParams[0])
 
         self.assertIsNotNone(result)
-        self.assertEqual("539f6172b19f63be376ab7e962c368bb5f611deff6b159152c4cdf509f7daad2", result.get("hash"))
-        self.assertEqual("96fef80f517f0b2704476dee48da147049b591e8f034e5bf93f1f6935fd51b85", result.get("blockHash"))
-        self.assertEqual(1102500, result.get("blockNumber"))
-        self.assertEqual(1590148157, result.get("timestamp"))
-        self.assertEqual(7115, result.get("confirmations"))
-        self.assertEqual("d62d519b3478c63bdd729cf2ccb863178060c64a", result.get("from"))
-        self.assertEqual("NQ53 SQNM 36RL F333 PPBJ KKRC RE33 2X06 1HJA", result.get("fromAddress"))
-        self.assertEqual("a22eaf17848130c9b370e42ff7d345680df245e1", result.get("to"))
-        self.assertEqual("NQ87 L8PA X5U4 G4QC KCTG UGPY FLS5 D06Y 4HF1", result.get("toAddress"))
-        self.assertEqual(5000000000, result.get("value"))
-        self.assertEqual(0, result.get("fee"))
-        self.assertEqual("d62d519b3478c63bdd729cf2ccb863178060c64af5ad55071730d3b9f05989481eefbda7324a44f8030c63b9444960db429081543939166f05116cebc37bd6975ac9f9e3bb43a5ab0b010010d2de", result.get("data"))
-        self.assertEqual(1, result.get("flags"))
+        self.assertEqual("539f6172b19f63be376ab7e962c368bb5f611deff6b159152c4cdf509f7daad2", result.hash)
+        self.assertEqual("96fef80f517f0b2704476dee48da147049b591e8f034e5bf93f1f6935fd51b85", result.blockHash)
+        self.assertEqual(1102500, result.blockNumber)
+        self.assertEqual(1590148157, result.timestamp)
+        self.assertEqual(7115, result.confirmations)
+        self.assertEqual("d62d519b3478c63bdd729cf2ccb863178060c64a", result.from_)
+        self.assertEqual("NQ53 SQNM 36RL F333 PPBJ KKRC RE33 2X06 1HJA", result.fromAddress)
+        self.assertEqual("a22eaf17848130c9b370e42ff7d345680df245e1", result.to)
+        self.assertEqual("NQ87 L8PA X5U4 G4QC KCTG UGPY FLS5 D06Y 4HF1", result.toAddress)
+        self.assertEqual(5000000000, result.value)
+        self.assertEqual(0, result.fee)
+        self.assertEqual("d62d519b3478c63bdd729cf2ccb863178060c64af5ad55071730d3b9f05989481eefbda7324a44f8030c63b9444960db429081543939166f05116cebc37bd6975ac9f9e3bb43a5ab0b010010d2de", result.data)
+        self.assertEqual(1, result.flags)
 
     def test_getTransactionReceipt(self):
         SessionStub.testData = Fixtures.getTransactionReceiptFound()
@@ -340,12 +340,12 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("fd8e46ae55c5b8cd7cb086cf8d6c81f941a516d6148021d55f912fb2ca75cc8e", SessionStub.latestRequestParams[0])
 
         self.assertIsNotNone(result)
-        self.assertEqual("fd8e46ae55c5b8cd7cb086cf8d6c81f941a516d6148021d55f912fb2ca75cc8e", result.get("transactionHash"))
-        self.assertEqual(-1, result.get("transactionIndex"))
-        self.assertEqual(11608, result.get("blockNumber"))
-        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.get("blockHash"))
-        self.assertEqual(1523412456, result.get("timestamp"))
-        self.assertEqual(718846, result.get("confirmations"))
+        self.assertEqual("fd8e46ae55c5b8cd7cb086cf8d6c81f941a516d6148021d55f912fb2ca75cc8e", result.transactionHash)
+        self.assertEqual(-1, result.transactionIndex)
+        self.assertEqual(11608, result.blockNumber)
+        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.blockHash)
+        self.assertEqual(1523412456, result.timestamp)
+        self.assertEqual(718846, result.confirmations)
 
     def test_getTransactionReceiptWhenNotFound(self):
         SessionStub.testData = Fixtures.getTransactionReceiptNotFound()
@@ -367,11 +367,11 @@ class TestStringMethods(unittest.TestCase):
 
         self.assertEqual(3, len(result))
         self.assertIsNotNone(result[0])
-        self.assertEqual("a514abb3ee4d3fbedf8a91156fb9ec4fdaf32f0d3d3da3c1dbc5fd1ee48db43e", result[0].get("hash"))
+        self.assertEqual("a514abb3ee4d3fbedf8a91156fb9ec4fdaf32f0d3d3da3c1dbc5fd1ee48db43e", result[0].hash)
         self.assertIsNotNone(result[1])
-        self.assertEqual("c8c0f586b11c7f39873c3de08610d63e8bec1ceaeba5e8a3bb13c709b2935f73", result[1].get("hash"))
+        self.assertEqual("c8c0f586b11c7f39873c3de08610d63e8bec1ceaeba5e8a3bb13c709b2935f73", result[1].hash)
         self.assertIsNotNone(result[2])
-        self.assertEqual("fd8e46ae55c5b8cd7cb086cf8d6c81f941a516d6148021d55f912fb2ca75cc8e", result[2].get("hash"))
+        self.assertEqual("fd8e46ae55c5b8cd7cb086cf8d6c81f941a516d6148021d55f912fb2ca75cc8e", result[2].hash)
 
     def test_getTransactionsByAddressWhenNoFound(self):
         SessionStub.testData = Fixtures.getTransactionsNotFound()
@@ -409,11 +409,11 @@ class TestStringMethods(unittest.TestCase):
 
         self.assertEqual(3, len(result))
         self.assertIsNotNone(result[0])
-        self.assertEqual("5bb722c2afe25c18ba33d453b3ac2c90ac278c595cc92f6188c8b699e8fb006a", result[0].get("hash"))
+        self.assertEqual("5bb722c2afe25c18ba33d453b3ac2c90ac278c595cc92f6188c8b699e8fb006a", result[0].hash)
         self.assertIsNotNone(result[1])
-        self.assertEqual("f59a30e0a7e3348ef569225db1f4c29026aeac4350f8c6e751f669eddce0c718", result[1].get("hash"))
+        self.assertEqual("f59a30e0a7e3348ef569225db1f4c29026aeac4350f8c6e751f669eddce0c718", result[1].hash)
         self.assertIsNotNone(result[2])
-        self.assertEqual("9cd9c1d0ffcaebfcfe86bc2ae73b4e82a488de99c8e3faef92b05432bb94519c", result[2].get("hash"))
+        self.assertEqual("9cd9c1d0ffcaebfcfe86bc2ae73b4e82a488de99c8e3faef92b05432bb94519c", result[2].hash)
 
     def test_mempoolWhenFull(self):
         SessionStub.testData = Fixtures.mempool()
@@ -423,9 +423,9 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("mempool", SessionStub.latestRequestMethod)
 
         self.assertIsNotNone(result)
-        self.assertEqual(3, result.get("total"))
-        self.assertEqual([1], result.get("buckets"))
-        self.assertEqual(3, result.get("transactionsPerBucket")[1])
+        self.assertEqual(3, result.total)
+        self.assertEqual([1], result.buckets)
+        self.assertEqual(3, result.transactionsPerBucket[1])
 
     def test_mempoolWhenEmpty(self):
         SessionStub.testData = Fixtures.mempoolEmpty()
@@ -435,9 +435,9 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("mempool", SessionStub.latestRequestMethod)
 
         self.assertIsNotNone(result)
-        self.assertEqual(0, result.get("total"))
-        self.assertEqual([], result.get("buckets"))
-        self.assertEqual(0, len(result.get("transactionsPerBucket")))
+        self.assertEqual(0, result.total)
+        self.assertEqual([], result.buckets)
+        self.assertEqual(0, len(result.transactionsPerBucket))
 
     def test_minFeePerByte(self):
         SessionStub.testData = Fixtures.minFeePerByte()
@@ -567,10 +567,10 @@ class TestStringMethods(unittest.TestCase):
 
         self.assertEqual("getWork", SessionStub.latestRequestMethod)
 
-        self.assertEqual("00015a7d47ddf5152a7d06a14ea291831c3fc7af20b88240c5ae839683021bcee3e279877b3de0da8ce8878bf225f6782a2663eff9a03478c15ba839fde9f1dc3dd9e5f0cd4dbc96a30130de130eb52d8160e9197e2ccf435d8d24a09b518a5e05da87a8658ed8c02531f66a7d31757b08c88d283654ed477e5e2fec21a7ca8449241e00d620000dc2fa5e763bda00000000", result.get("data"))
-        self.assertEqual("11fad9806b8b4167517c162fa113c09606b44d24f8020804a0f756db085546ff585adfdedad9085d36527a8485b497728446c35b9b6c3db263c07dd0a1f487b1639aa37ff60ba3cf6ed8ab5146fee50a23ebd84ea37dca8c49b31e57d05c9e6c57f09a3b282b71ec2be66c1bc8268b5326bb222b11a0d0a4acd2a93c9e8a8713fe4383e9d5df3b1bf008c535281086b2bcc20e494393aea1475a5c3f13673de2cf7314d201b7cc7f01e0e6f0e07dd9249dc598f4e5ee8801f50000000000", result.get("suffix"))
-        self.assertEqual(503371296, result.get("target"))
-        self.assertEqual("nimiq-argon2", result.get("algorithm"))
+        self.assertEqual("00015a7d47ddf5152a7d06a14ea291831c3fc7af20b88240c5ae839683021bcee3e279877b3de0da8ce8878bf225f6782a2663eff9a03478c15ba839fde9f1dc3dd9e5f0cd4dbc96a30130de130eb52d8160e9197e2ccf435d8d24a09b518a5e05da87a8658ed8c02531f66a7d31757b08c88d283654ed477e5e2fec21a7ca8449241e00d620000dc2fa5e763bda00000000", result.data)
+        self.assertEqual("11fad9806b8b4167517c162fa113c09606b44d24f8020804a0f756db085546ff585adfdedad9085d36527a8485b497728446c35b9b6c3db263c07dd0a1f487b1639aa37ff60ba3cf6ed8ab5146fee50a23ebd84ea37dca8c49b31e57d05c9e6c57f09a3b282b71ec2be66c1bc8268b5326bb222b11a0d0a4acd2a93c9e8a8713fe4383e9d5df3b1bf008c535281086b2bcc20e494393aea1475a5c3f13673de2cf7314d201b7cc7f01e0e6f0e07dd9249dc598f4e5ee8801f50000000000", result.suffix)
+        self.assertEqual(503371296, result.target)
+        self.assertEqual("nimiq-argon2", result.algorithm)
 
     def test_getWorkWithOverride(self):
         SessionStub.testData = Fixtures.getWork()
@@ -581,10 +581,10 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", SessionStub.latestRequestParams[0])
         self.assertEqual("", SessionStub.latestRequestParams[1])
 
-        self.assertEqual("00015a7d47ddf5152a7d06a14ea291831c3fc7af20b88240c5ae839683021bcee3e279877b3de0da8ce8878bf225f6782a2663eff9a03478c15ba839fde9f1dc3dd9e5f0cd4dbc96a30130de130eb52d8160e9197e2ccf435d8d24a09b518a5e05da87a8658ed8c02531f66a7d31757b08c88d283654ed477e5e2fec21a7ca8449241e00d620000dc2fa5e763bda00000000", result.get("data"))
-        self.assertEqual("11fad9806b8b4167517c162fa113c09606b44d24f8020804a0f756db085546ff585adfdedad9085d36527a8485b497728446c35b9b6c3db263c07dd0a1f487b1639aa37ff60ba3cf6ed8ab5146fee50a23ebd84ea37dca8c49b31e57d05c9e6c57f09a3b282b71ec2be66c1bc8268b5326bb222b11a0d0a4acd2a93c9e8a8713fe4383e9d5df3b1bf008c535281086b2bcc20e494393aea1475a5c3f13673de2cf7314d201b7cc7f01e0e6f0e07dd9249dc598f4e5ee8801f50000000000", result.get("suffix"))
-        self.assertEqual(503371296, result.get("target"))
-        self.assertEqual("nimiq-argon2", result.get("algorithm"))
+        self.assertEqual("00015a7d47ddf5152a7d06a14ea291831c3fc7af20b88240c5ae839683021bcee3e279877b3de0da8ce8878bf225f6782a2663eff9a03478c15ba839fde9f1dc3dd9e5f0cd4dbc96a30130de130eb52d8160e9197e2ccf435d8d24a09b518a5e05da87a8658ed8c02531f66a7d31757b08c88d283654ed477e5e2fec21a7ca8449241e00d620000dc2fa5e763bda00000000", result.data)
+        self.assertEqual("11fad9806b8b4167517c162fa113c09606b44d24f8020804a0f756db085546ff585adfdedad9085d36527a8485b497728446c35b9b6c3db263c07dd0a1f487b1639aa37ff60ba3cf6ed8ab5146fee50a23ebd84ea37dca8c49b31e57d05c9e6c57f09a3b282b71ec2be66c1bc8268b5326bb222b11a0d0a4acd2a93c9e8a8713fe4383e9d5df3b1bf008c535281086b2bcc20e494393aea1475a5c3f13673de2cf7314d201b7cc7f01e0e6f0e07dd9249dc598f4e5ee8801f50000000000", result.suffix)
+        self.assertEqual(503371296, result.target)
+        self.assertEqual("nimiq-argon2", result.algorithm)
 
     def test_getBlockTemplate(self):
         SessionStub.testData = Fixtures.getWorkBlockTemplate()
@@ -593,9 +593,9 @@ class TestStringMethods(unittest.TestCase):
 
         self.assertEqual("getBlockTemplate", SessionStub.latestRequestMethod)
 
-        self.assertEqual(901883, result.get("header").get("height"))
-        self.assertEqual(503371226, result.get("target"))
-        self.assertEqual("17e250f1977ae85bdbe09468efef83587885419ee1074ddae54d3fb5a96e1f54", result.get("body").get("hash"))
+        self.assertEqual(901883, result.header.height)
+        self.assertEqual(503371226, result.target)
+        self.assertEqual("17e250f1977ae85bdbe09468efef83587885419ee1074ddae54d3fb5a96e1f54", result.body.hash)
 
     def test_getBlockTemplateWithOverride(self):
         SessionStub.testData = Fixtures.getWorkBlockTemplate()
@@ -606,9 +606,9 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", SessionStub.latestRequestParams[0])
         self.assertEqual("", SessionStub.latestRequestParams[1])
 
-        self.assertEqual(901883, result.get("header").get("height"))
-        self.assertEqual(503371226, result.get("target"))
-        self.assertEqual("17e250f1977ae85bdbe09468efef83587885419ee1074ddae54d3fb5a96e1f54", result.get("body").get("hash"))
+        self.assertEqual(901883, result.header.height)
+        self.assertEqual(503371226, result.target)
+        self.assertEqual("17e250f1977ae85bdbe09468efef83587885419ee1074ddae54d3fb5a96e1f54", result.body.hash)
 
     def test_submitBlock(self):
         SessionStub.testData = Fixtures.submitBlock()
@@ -631,39 +631,39 @@ class TestStringMethods(unittest.TestCase):
 
         self.assertIsNotNone(result[0])
         account = result[0]
-        self.assertEqual("f925107376081be421f52d64bec775cc1fc20829", account.get("id"))
-        self.assertEqual("NQ33 Y4JH 0UTN 10DX 88FM 5MJB VHTM RGFU 4219", account.get("address"))
-        self.assertEqual(0, account.get("balance"))
-        self.assertEqual(AccountType.BASIC, account.get("type"))
+        self.assertEqual("f925107376081be421f52d64bec775cc1fc20829", account.id)
+        self.assertEqual("NQ33 Y4JH 0UTN 10DX 88FM 5MJB VHTM RGFU 4219", account.address)
+        self.assertEqual(0, account.balance)
+        self.assertEqual(AccountType.BASIC, account.type)
 
         self.assertIsNotNone(result[1])
         vesting = result[1]
-        self.assertEqual("ebcbf0de7dae6a42d1c12967db9b2287bf2f7f0f", vesting.get("id"))
-        self.assertEqual("NQ09 VF5Y 1PKV MRM4 5LE1 55KV P6R2 GXYJ XYQF", vesting.get("address"))
-        self.assertEqual(52500000000000, vesting.get("balance"))
-        self.assertEqual(AccountType.VESTING, vesting.get("type"))
-        self.assertEqual("fd34ab7265a0e48c454ccbf4c9c61dfdf68f9a22", vesting.get("owner"))
-        self.assertEqual("NQ62 YLSA NUK5 L3J8 QHAC RFSC KHGV YPT8 Y6H2", vesting.get("ownerAddress"))
-        self.assertEqual(1, vesting.get("vestingStart"))
-        self.assertEqual(259200, vesting.get("vestingStepBlocks"))
-        self.assertEqual(2625000000000, vesting.get("vestingStepAmount"))
-        self.assertEqual(52500000000000, vesting.get("vestingTotalAmount"))
+        self.assertEqual("ebcbf0de7dae6a42d1c12967db9b2287bf2f7f0f", vesting.id)
+        self.assertEqual("NQ09 VF5Y 1PKV MRM4 5LE1 55KV P6R2 GXYJ XYQF", vesting.address)
+        self.assertEqual(52500000000000, vesting.balance)
+        self.assertEqual(AccountType.VESTING, vesting.type)
+        self.assertEqual("fd34ab7265a0e48c454ccbf4c9c61dfdf68f9a22", vesting.owner)
+        self.assertEqual("NQ62 YLSA NUK5 L3J8 QHAC RFSC KHGV YPT8 Y6H2", vesting.ownerAddress)
+        self.assertEqual(1, vesting.vestingStart)
+        self.assertEqual(259200, vesting.vestingStepBlocks)
+        self.assertEqual(2625000000000, vesting.vestingStepAmount)
+        self.assertEqual(52500000000000, vesting.vestingTotalAmount)
 
         self.assertIsNotNone(result[2])
         htlc = result[2]
-        self.assertEqual("4974636bd6d34d52b7d4a2ee4425dc2be72a2b4e", htlc.get("id"))
-        self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", htlc.get("address"))
-        self.assertEqual(1000000000, htlc.get("balance"))
-        self.assertEqual(AccountType.HTLC, htlc.get("type"))
-        self.assertEqual("d62d519b3478c63bdd729cf2ccb863178060c64a", htlc.get("sender"))
-        self.assertEqual("NQ53 SQNM 36RL F333 PPBJ KKRC RE33 2X06 1HJA", htlc.get("senderAddress"))
-        self.assertEqual("f5ad55071730d3b9f05989481eefbda7324a44f8", htlc.get("recipient"))
-        self.assertEqual("NQ41 XNNM A1QP 639T KU2R H541 VTVV LUR4 LH7Q", htlc.get("recipientAddress"))
-        self.assertEqual("df331b3c8f8a889703092ea05503779058b7f44e71bc57176378adde424ce922", htlc.get("hashRoot"))
-        self.assertEqual(1, htlc.get("hashAlgorithm"))
-        self.assertEqual(1, htlc.get("hashCount"))
-        self.assertEqual(1105605, htlc.get("timeout"))
-        self.assertEqual(1000000000, htlc.get("totalAmount"))
+        self.assertEqual("4974636bd6d34d52b7d4a2ee4425dc2be72a2b4e", htlc.id)
+        self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", htlc.address)
+        self.assertEqual(1000000000, htlc.balance)
+        self.assertEqual(AccountType.HTLC, htlc.type)
+        self.assertEqual("d62d519b3478c63bdd729cf2ccb863178060c64a", htlc.sender)
+        self.assertEqual("NQ53 SQNM 36RL F333 PPBJ KKRC RE33 2X06 1HJA", htlc.senderAddress)
+        self.assertEqual("f5ad55071730d3b9f05989481eefbda7324a44f8", htlc.recipient)
+        self.assertEqual("NQ41 XNNM A1QP 639T KU2R H541 VTVV LUR4 LH7Q", htlc.recipientAddress)
+        self.assertEqual("df331b3c8f8a889703092ea05503779058b7f44e71bc57176378adde424ce922", htlc.hashRoot)
+        self.assertEqual(1, htlc.hashAlgorithm)
+        self.assertEqual(1, htlc.hashCount)
+        self.assertEqual(1105605, htlc.timeout)
+        self.assertEqual(1000000000, htlc.totalAmount)
 
     def test_createAccount(self):
         SessionStub.testData = Fixtures.createAccount()
@@ -673,9 +673,9 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("createAccount", SessionStub.latestRequestMethod)
 
         self.assertIsNotNone(result)
-        self.assertEqual("b6edcc7924af5a05af6087959c7233ec2cf1a5db", result.get("id"))
-        self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", result.get("address"))
-        self.assertEqual("4f6d35cc47b77bf696b6cce72217e52edff972855bd17396b004a8453b020747", result.get("publicKey"))
+        self.assertEqual("b6edcc7924af5a05af6087959c7233ec2cf1a5db", result.id)
+        self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", result.address)
+        self.assertEqual("4f6d35cc47b77bf696b6cce72217e52edff972855bd17396b004a8453b020747", result.publicKey)
 
     def test_getBalance(self):
         SessionStub.testData = Fixtures.getBalance()
@@ -695,10 +695,10 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("getAccount", SessionStub.latestRequestMethod)
         self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", SessionStub.latestRequestParams[0])
 
-        self.assertEqual("b6edcc7924af5a05af6087959c7233ec2cf1a5db", result.get("id"))
-        self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", result.get("address"))
-        self.assertEqual(1200000, result.get("balance"))
-        self.assertEqual(AccountType.BASIC, result.get("type"))
+        self.assertEqual("b6edcc7924af5a05af6087959c7233ec2cf1a5db", result.id)
+        self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", result.address)
+        self.assertEqual(1200000, result.balance)
+        self.assertEqual(AccountType.BASIC, result.type)
 
     def test_getAccountForVestingContract(self):
         SessionStub.testData = Fixtures.getAccountVesting()
@@ -708,16 +708,16 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("getAccount", SessionStub.latestRequestMethod)
         self.assertEqual("NQ09 VF5Y 1PKV MRM4 5LE1 55KV P6R2 GXYJ XYQF", SessionStub.latestRequestParams[0])
 
-        self.assertEqual("ebcbf0de7dae6a42d1c12967db9b2287bf2f7f0f", result.get("id"))
-        self.assertEqual("NQ09 VF5Y 1PKV MRM4 5LE1 55KV P6R2 GXYJ XYQF", result.get("address"))
-        self.assertEqual(52500000000000, result.get("balance"))
-        self.assertEqual(AccountType.VESTING, result.get("type"))
-        self.assertEqual("fd34ab7265a0e48c454ccbf4c9c61dfdf68f9a22", result.get("owner"))
-        self.assertEqual("NQ62 YLSA NUK5 L3J8 QHAC RFSC KHGV YPT8 Y6H2", result.get("ownerAddress"))
-        self.assertEqual(1, result.get("vestingStart"))
-        self.assertEqual(259200, result.get("vestingStepBlocks"))
-        self.assertEqual(2625000000000, result.get("vestingStepAmount"))
-        self.assertEqual(52500000000000, result.get("vestingTotalAmount"))
+        self.assertEqual("ebcbf0de7dae6a42d1c12967db9b2287bf2f7f0f", result.id)
+        self.assertEqual("NQ09 VF5Y 1PKV MRM4 5LE1 55KV P6R2 GXYJ XYQF", result.address)
+        self.assertEqual(52500000000000, result.balance)
+        self.assertEqual(AccountType.VESTING, result.type)
+        self.assertEqual("fd34ab7265a0e48c454ccbf4c9c61dfdf68f9a22", result.owner)
+        self.assertEqual("NQ62 YLSA NUK5 L3J8 QHAC RFSC KHGV YPT8 Y6H2", result.ownerAddress)
+        self.assertEqual(1, result.vestingStart)
+        self.assertEqual(259200, result.vestingStepBlocks)
+        self.assertEqual(2625000000000, result.vestingStepAmount)
+        self.assertEqual(52500000000000, result.vestingTotalAmount)
 
     def test_getAccountForHashedTimeLockedContract(self):
         SessionStub.testData = Fixtures.getAccountVestingHtlc()
@@ -727,19 +727,19 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual("getAccount", SessionStub.latestRequestMethod)
         self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", SessionStub.latestRequestParams[0])
 
-        self.assertEqual("4974636bd6d34d52b7d4a2ee4425dc2be72a2b4e", result.get("id"))
-        self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", result.get("address"))
-        self.assertEqual(1000000000, result.get("balance"))
-        self.assertEqual(AccountType.HTLC, result.get("type"))
-        self.assertEqual("d62d519b3478c63bdd729cf2ccb863178060c64a", result.get("sender"))
-        self.assertEqual("NQ53 SQNM 36RL F333 PPBJ KKRC RE33 2X06 1HJA", result.get("senderAddress"))
-        self.assertEqual("f5ad55071730d3b9f05989481eefbda7324a44f8", result.get("recipient"))
-        self.assertEqual("NQ41 XNNM A1QP 639T KU2R H541 VTVV LUR4 LH7Q", result.get("recipientAddress"))
-        self.assertEqual("df331b3c8f8a889703092ea05503779058b7f44e71bc57176378adde424ce922", result.get("hashRoot"))
-        self.assertEqual(1, result.get("hashAlgorithm"))
-        self.assertEqual(1, result.get("hashCount"))
-        self.assertEqual(1105605, result.get("timeout"))
-        self.assertEqual(1000000000, result.get("totalAmount"))
+        self.assertEqual("4974636bd6d34d52b7d4a2ee4425dc2be72a2b4e", result.id)
+        self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", result.address)
+        self.assertEqual(1000000000, result.balance)
+        self.assertEqual(AccountType.HTLC, result.type)
+        self.assertEqual("d62d519b3478c63bdd729cf2ccb863178060c64a", result.sender)
+        self.assertEqual("NQ53 SQNM 36RL F333 PPBJ KKRC RE33 2X06 1HJA", result.senderAddress)
+        self.assertEqual("f5ad55071730d3b9f05989481eefbda7324a44f8", result.recipient)
+        self.assertEqual("NQ41 XNNM A1QP 639T KU2R H541 VTVV LUR4 LH7Q", result.recipientAddress)
+        self.assertEqual("df331b3c8f8a889703092ea05503779058b7f44e71bc57176378adde424ce922", result.hashRoot)
+        self.assertEqual(1, result.hashAlgorithm)
+        self.assertEqual(1, result.hashCount)
+        self.assertEqual(1105605, result.timeout)
+        self.assertEqual(1000000000, result.totalAmount)
 
     def test_blockNumber(self):
         SessionStub.testData = Fixtures.blockNumber()
@@ -800,13 +800,13 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(False, SessionStub.latestRequestParams[1])
 
         self.assertIsNotNone(result)
-        self.assertEqual(11608, result.get("number"))
-        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.get("hash"))
-        self.assertEqual(739224, result.get("confirmations"))
+        self.assertEqual(11608, result.number)
+        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.hash)
+        self.assertEqual(739224, result.confirmations)
         self.assertEqual([
             "78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430",
             "fd8e46ae55c5b8cd7cb086cf8d6c81f941a516d6148021d55f912fb2ca75cc8e",
-        ], result.get("transactions"))
+        ], result.transactions)
 
     def test_getBlockByHashWithTransactions(self):
         SessionStub.testData = Fixtures.getBlockWithTransactions()
@@ -818,13 +818,13 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(True, SessionStub.latestRequestParams[1])
 
         self.assertIsNotNone(result)
-        self.assertEqual(11608, result.get("number"))
-        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.get("hash"))
-        self.assertEqual(739501, result.get("confirmations"))
+        self.assertEqual(11608, result.number)
+        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.hash)
+        self.assertEqual(739501, result.confirmations)
 
-        self.assertEqual(2, len(result.get("transactions")))
-        self.assertIs(type(result.get("transactions")[0]), dict)
-        self.assertIs(type(result.get("transactions")[1]), dict)
+        self.assertEqual(2, len(result.transactions))
+        self.assertIs(type(result.transactions[0]), Edict)
+        self.assertIs(type(result.transactions[1]), Edict)
 
     def test_getBlockByHashNotFound(self):
         SessionStub.testData = Fixtures.getBlockNotFound()
@@ -847,13 +847,13 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(False, SessionStub.latestRequestParams[1])
 
         self.assertIsNotNone(result)
-        self.assertEqual(11608, result.get("number"))
-        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.get("hash"))
-        self.assertEqual(739224, result.get("confirmations"))
+        self.assertEqual(11608, result.number)
+        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.hash)
+        self.assertEqual(739224, result.confirmations)
         self.assertEqual([
             "78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430",
             "fd8e46ae55c5b8cd7cb086cf8d6c81f941a516d6148021d55f912fb2ca75cc8e",
-        ], result.get("transactions"))
+        ], result.transactions)
 
     def test_getBlockByNumberWithTransactions(self):
         SessionStub.testData = Fixtures.getBlockWithTransactions()
@@ -865,13 +865,13 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(True, SessionStub.latestRequestParams[1])
 
         self.assertIsNotNone(result)
-        self.assertEqual(11608, result.get("number"))
-        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.get("hash"))
-        self.assertEqual(739501, result.get("confirmations"))
+        self.assertEqual(11608, result.number)
+        self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.hash)
+        self.assertEqual(739501, result.confirmations)
 
-        self.assertEqual(2, len(result.get("transactions")))
-        self.assertIs(type(result.get("transactions")[0]), dict)
-        self.assertIs(type(result.get("transactions")[1]), dict)
+        self.assertEqual(2, len(result.transactions))
+        self.assertIs(type(result.transactions[0]), Edict)
+        self.assertIs(type(result.transactions[1]), Edict)
 
     def test_getBlockByNumberNotFound(self):
         SessionStub.testData = Fixtures.getBlockNotFound()
