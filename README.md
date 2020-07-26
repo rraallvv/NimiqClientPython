@@ -1,5 +1,7 @@
-# Nimiq Client Python
-[![Build Status](https://travis-ci.org/rraallvv/NimiqClientPython.svg?branch=master)](https://travis-ci.org/rraallvv/NimiqClientPython) [![PyPI version](https://badge.fury.io/py/nimiqclient.svg)](https://badge.fury.io/py/nimiqclient)
+Nimiq Client Python
+===================
+[![Build Status](https://travis-ci.org/rraallvv/NimiqClientPython.svg?branch=master)](https://travis-ci.org/rraallvv/NimiqClientPython)
+[![PyPI version](https://badge.fury.io/py/nimiqclient.svg)](https://badge.fury.io/py/nimiqclient)
 
 > Python implementation of the Nimiq RPC client specs.
 
