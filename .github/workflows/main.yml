@@ -32,7 +32,6 @@ jobs:
         coverage run --source=nimiqclient setup.py test
     - name: Coveralls
       env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        COVERALLS_SERVICE_NAME: travis-ci
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       run: |
         coveralls
