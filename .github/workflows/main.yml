@@ -31,5 +31,7 @@ jobs:
       run: |
         coverage run --source=nimiqclient setup.py test
     - name: Coveralls
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        COVERALLS_REPO_TOKEN=$GITHUB_TOKEN coveralls
+        coveralls
