@@ -18,6 +18,6 @@ setup(
     install_requires=[
         'requests'
     ],
-    python_requires='>=2.7.16',
+    python_requires='>=2.4',
     test_suite='test',
 )
