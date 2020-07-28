@@ -1,3 +1,7 @@
+__all__ = [
+    "Fixtures"
+]
+
 class Fixtures():
     @staticmethod
     def accounts():
