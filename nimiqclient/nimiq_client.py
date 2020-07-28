@@ -117,14 +117,14 @@ class Edict(dict):
         if attr.endswith("_"):
             attr = attr[:-1]
         if attr in self:
-            return super().__getitem__(attr)
+            return super(Edict, self).__getitem__(attr)
         else:
             return None
 
     def __setattr__(self, key, value):
         if key.endswith("_"):
             key = key[:-1]
-        super().__setitem__(key, value)
+        super(Edict, self).__setitem__(key, value)
 
     @staticmethod
     def wrap(obj):

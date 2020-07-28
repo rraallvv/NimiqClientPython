@@ -1,9 +1,13 @@
+__all__ = [
+    "TestNimiqClientMethods"
+]
+
 from nimiqclient import *
 import unittest
 from fixtures import Fixtures
 from session_stub import SessionStub
 
-class TestStringMethods(unittest.TestCase):
+class TestNimiqClientMethods(unittest.TestCase):
     client = None
 
     @classmethod
