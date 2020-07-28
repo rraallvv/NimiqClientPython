@@ -4,6 +4,7 @@ Nimiq Client Python
 ![build](https://github.com/rraallvv/NimiqClientPython/workflows/build/badge.svg)
 [![PyPI version](https://badge.fury.io/py/nimiqclient.svg)](https://badge.fury.io/py/nimiqclient)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b539d9690dc040c3f33d/maintainability)](https://codeclimate.com/github/rraallvv/NimiqClientPython/maintainability)
+[![Coverage Status](https://coveralls.io/repos/github/rraallvv/NimiqClientPython/badge.svg?branch=master)](https://coveralls.io/github/rraallvv/NimiqClientPython?branch=master)
 
 > Python implementation of the Nimiq RPC client specs.
 
