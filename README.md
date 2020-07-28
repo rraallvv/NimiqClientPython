@@ -58,7 +58,7 @@ After cloning the repository intall the package.
 ```
 $ git clone https://github.com/rraallvv/NimiqClientPython
 $ cd NimiqClientPython
-$ python3 setup.py install
+$ python setup.py install
 ```
 
 All done, happy coding!
@@ -68,8 +68,7 @@ All done, happy coding!
 Tests are stored in the `/tests` folder and can be run with the script `test.py`.
 
 ```
-$ cd tests
-$ python3 test.py
+$ python -m unittest discover -v
 ```
 
 ### Documentation
@@ -83,4 +82,3 @@ doxygen doxygenfile
 ## License
 
 [MIT](LICENSE)
-
