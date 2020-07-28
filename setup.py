@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='nimiqclient',
-    version='0.0.6',
+    version='0.0.7',
     description='A python client for the Nimiq JSON-RPC API',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -16,7 +16,8 @@ setup(
     packages=['nimiqclient'],
     zip_safe=True,
     install_requires=[
-        'requests'
+        'requests',
+        'enum34'
     ],
     python_requires='>=2.4',
     test_suite='test',
