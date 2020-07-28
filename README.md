@@ -1,7 +1,7 @@
 Nimiq Client Python
 ===================
 
-[![Build Status](https://travis-ci.org/rraallvv/NimiqClientPython.svg?branch=master)](https://travis-ci.org/rraallvv/NimiqClientPython)
+![build](https://github.com/rraallvv/NimiqClientPython/workflows/build/badge.svg)
 [![PyPI version](https://badge.fury.io/py/nimiqclient.svg)](https://badge.fury.io/py/nimiqclient)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b539d9690dc040c3f33d/maintainability)](https://codeclimate.com/github/rraallvv/NimiqClientPython/maintainability)
 
