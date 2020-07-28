@@ -4,8 +4,8 @@ __all__ = [
 
 from nimiqclient import *
 import unittest
-from fixtures import Fixtures
-from session_stub import SessionStub
+from .fixtures import Fixtures
+from .session_stub import SessionStub
 
 class TestNimiqClientMethods(unittest.TestCase):
     client = None
