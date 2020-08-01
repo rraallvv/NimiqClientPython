@@ -10,12 +10,10 @@ from .session_stub import SessionStub
 class TestNimiqClientMethods(unittest.TestCase):
     client = None
 
-    @classmethod
-    def setUpClass(cls):
-        cls.client = NimiqClient(scheme = "http", user = "", password = "", host = "127.0.0.1", port = 8648, session = SessionStub())
+    def setUp(self):
+        self.client = NimiqClient(scheme = "http", user = "", password = "", host = "127.0.0.1", port = 8648, session = SessionStub())
 
-    @classmethod
-    def tearDownClass(cls):
+    def tearDown(self):
         pass
 
     def test_peerCount(self):
@@ -34,7 +32,7 @@ class TestNimiqClientMethods(unittest.TestCase):
 
         self.assertEqual("syncing", SessionStub.latestRequestMethod)
 
-        self.assertIsNot(type(result), bool)
+        self.assertTrue(type(result) is not bool)
         self.assertEqual(578430, result.startingBlock)
         self.assertEqual(586493, result.currentBlock)
         self.assertEqual(586493, result.highestBlock)
@@ -46,7 +44,7 @@ class TestNimiqClientMethods(unittest.TestCase):
 
         self.assertEqual("syncing", SessionStub.latestRequestMethod)
 
-        self.assertIs(type(result), bool)
+        self.assertTrue(type(result) is bool)
         self.assertEqual(False, result)
 
     def test_consensusState(self):
@@ -66,13 +64,13 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("peerList", SessionStub.latestRequestMethod)
 
         self.assertEqual(len(result), 2)
-        self.assertIsNotNone(result[0])
+        self.assertTrue(result[0] is not None)
         self.assertEqual("b99034c552e9c0fd34eb95c1cdf17f5e", result[0].id)
         self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", result[0].address)
         self.assertEqual(PeerAddressState.ESTABLISHED, result[0].addressState)
         self.assertEqual(PeerConnectionState.ESTABLISHED, result[0].connectionState)
 
-        self.assertIsNotNone(result[1])
+        self.assertTrue(result[1] is not None)
         self.assertEqual("e37dca72802c972d45b37735e9595cf0", result[1].id)
         self.assertEqual("wss://seed4.nimiq-testnet.com:8080/e37dca72802c972d45b37735e9595cf0", result[1].address)
         self.assertEqual(PeerAddressState.FAILED, result[1].addressState)
@@ -95,7 +93,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("peerState", SessionStub.latestRequestMethod)
         self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", SessionStub.latestRequestParams[0])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual("b99034c552e9c0fd34eb95c1cdf17f5e", result.id)
         self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", result.address)
         self.assertEqual(PeerAddressState.ESTABLISHED, result.addressState)
@@ -109,7 +107,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("peerState", SessionStub.latestRequestMethod)
         self.assertEqual("wss://seed4.nimiq-testnet.com:8080/e37dca72802c972d45b37735e9595cf0", SessionStub.latestRequestParams[0])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual("e37dca72802c972d45b37735e9595cf0", result.id)
         self.assertEqual("wss://seed4.nimiq-testnet.com:8080/e37dca72802c972d45b37735e9595cf0", result.address)
         self.assertEqual(PeerAddressState.FAILED, result.addressState)
@@ -129,7 +127,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", SessionStub.latestRequestParams[0])
         self.assertEqual("connect", SessionStub.latestRequestParams[1])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual("b99034c552e9c0fd34eb95c1cdf17f5e", result.id)
         self.assertEqual("wss://seed1.nimiq-testnet.com:8080/b99034c552e9c0fd34eb95c1cdf17f5e", result.address)
         self.assertEqual(PeerAddressState.ESTABLISHED, result.addressState)
@@ -213,7 +211,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("getRawTransactionInfo", SessionStub.latestRequestMethod)
         self.assertEqual("00c3c0d1af80b84c3b3de4e3d79d5c8cc950e044098c969953d68bf9cee68d7b53305dbaac7514a06dae935e40d599caf1bd8a243c00000000000186a00000000000000001000af84c01239b16cee089836c2af5c7b1dbb22cdc0b4864349f7f3805909aa8cf24e4c1ff0461832e86f3624778a867d5f2ba318f92918ada7ae28d70d40c4ef1d6413802", SessionStub.latestRequestParams[0])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual("7784f2f6eaa076fa5cf0e4d06311ad204b2f485de622231785451181e8129091", result.hash)
         self.assertEqual("b7cc7f01e0e6f0e07dd9249dc598f4e5ee8801f5", result.from_)
         self.assertEqual("NQ39 NY67 X0F0 UTQE 0YER 4JEU B67L UPP8 G0FM", result.fromAddress)
@@ -231,7 +229,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", SessionStub.latestRequestParams[0])
         self.assertEqual(0, SessionStub.latestRequestParams[1])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", result.hash)
         self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.blockHash)
         self.assertEqual(0, result.transactionIndex)
@@ -251,7 +249,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", SessionStub.latestRequestParams[0])
         self.assertEqual(5, SessionStub.latestRequestParams[1])
 
-        self.assertIsNone(result)
+        self.assertTrue(result is None)
 
     def test_getTransactionByBlockNumberAndIndex(self):
         SessionStub.testData = Fixtures.getTransactionFull()
@@ -262,7 +260,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual(11608, SessionStub.latestRequestParams[0])
         self.assertEqual(0, SessionStub.latestRequestParams[1])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", result.hash)
         self.assertEqual(11608, result.blockNumber)
         self.assertEqual(0, result.transactionIndex)
@@ -282,7 +280,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual(11608, SessionStub.latestRequestParams[0])
         self.assertEqual(0, SessionStub.latestRequestParams[1])
 
-        self.assertIsNone(result)
+        self.assertTrue(result is None)
 
     def test_getTransactionByHash(self):
         SessionStub.testData = Fixtures.getTransactionFull()
@@ -292,7 +290,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("getTransactionByHash", SessionStub.latestRequestMethod)
         self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", SessionStub.latestRequestParams[0])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", result.hash)
         self.assertEqual(11608, result.blockNumber)
         self.assertEqual("355b4fe2304a9c818b9f0c3c1aaaf4ad4f6a0279", result.from_)
@@ -310,7 +308,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("getTransactionByHash", SessionStub.latestRequestMethod)
         self.assertEqual("78957b87ab5546e11e9540ce5a37ebbf93a0ebd73c0ce05f137288f30ee9f430", SessionStub.latestRequestParams[0])
 
-        self.assertIsNone(result)
+        self.assertTrue(result is None)
 
     def test_getTransactionByHashForContractCreation(self):
         SessionStub.testData = Fixtures.getTransactionContractCreation()
@@ -320,7 +318,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("getTransactionByHash", SessionStub.latestRequestMethod)
         self.assertEqual("539f6172b19f63be376ab7e962c368bb5f611deff6b159152c4cdf509f7daad2", SessionStub.latestRequestParams[0])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual("539f6172b19f63be376ab7e962c368bb5f611deff6b159152c4cdf509f7daad2", result.hash)
         self.assertEqual("96fef80f517f0b2704476dee48da147049b591e8f034e5bf93f1f6935fd51b85", result.blockHash)
         self.assertEqual(1102500, result.blockNumber)
@@ -343,7 +341,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("getTransactionReceipt", SessionStub.latestRequestMethod)
         self.assertEqual("fd8e46ae55c5b8cd7cb086cf8d6c81f941a516d6148021d55f912fb2ca75cc8e", SessionStub.latestRequestParams[0])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual("fd8e46ae55c5b8cd7cb086cf8d6c81f941a516d6148021d55f912fb2ca75cc8e", result.transactionHash)
         self.assertEqual(-1, result.transactionIndex)
         self.assertEqual(11608, result.blockNumber)
@@ -359,7 +357,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("getTransactionReceipt", SessionStub.latestRequestMethod)
         self.assertEqual("unknown", SessionStub.latestRequestParams[0])
 
-        self.assertIsNone(result)
+        self.assertTrue(result is None)
 
     def test_getTransactionsByAddress(self):
         SessionStub.testData = Fixtures.getTransactionsFound()
@@ -370,11 +368,11 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("NQ05 9VGU 0TYE NXBH MVLR E4JY UG6N 5701 MX9F", SessionStub.latestRequestParams[0])
 
         self.assertEqual(3, len(result))
-        self.assertIsNotNone(result[0])
+        self.assertTrue(result[0] is not None)
         self.assertEqual("a514abb3ee4d3fbedf8a91156fb9ec4fdaf32f0d3d3da3c1dbc5fd1ee48db43e", result[0].hash)
-        self.assertIsNotNone(result[1])
+        self.assertTrue(result[1] is not None)
         self.assertEqual("c8c0f586b11c7f39873c3de08610d63e8bec1ceaeba5e8a3bb13c709b2935f73", result[1].hash)
-        self.assertIsNotNone(result[2])
+        self.assertTrue(result[2] is not None)
         self.assertEqual("fd8e46ae55c5b8cd7cb086cf8d6c81f941a516d6148021d55f912fb2ca75cc8e", result[2].hash)
 
     def test_getTransactionsByAddressWhenNoFound(self):
@@ -387,7 +385,7 @@ class TestNimiqClientMethods(unittest.TestCase):
 
         self.assertEqual(0, len(result))
 
-    def test__mempoolContentHashesOnly(self):
+    def test_mempoolContentHashesOnly(self):
         SessionStub.testData = Fixtures.mempoolContentHashesOnly()
 
         result = self.client.mempoolContent()
@@ -396,11 +394,11 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual(False, SessionStub.latestRequestParams[0])
 
         self.assertEqual(3, len(result))
-        self.assertIsNotNone(result[0])
+        self.assertTrue(result[0] is not None)
         self.assertEqual("5bb722c2afe25c18ba33d453b3ac2c90ac278c595cc92f6188c8b699e8fb006a", result[0])
-        self.assertIsNotNone(result[1])
+        self.assertTrue(result[1] is not None)
         self.assertEqual("f59a30e0a7e3348ef569225db1f4c29026aeac4350f8c6e751f669eddce0c718", result[1])
-        self.assertIsNotNone(result[2])
+        self.assertTrue(result[2] is not None)
         self.assertEqual("9cd9c1d0ffcaebfcfe86bc2ae73b4e82a488de99c8e3faef92b05432bb94519c", result[2])
 
     def test_mempoolContentFullTransactions(self):
@@ -412,11 +410,11 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual(True, SessionStub.latestRequestParams[0])
 
         self.assertEqual(3, len(result))
-        self.assertIsNotNone(result[0])
+        self.assertTrue(result[0] is not None)
         self.assertEqual("5bb722c2afe25c18ba33d453b3ac2c90ac278c595cc92f6188c8b699e8fb006a", result[0].hash)
-        self.assertIsNotNone(result[1])
+        self.assertTrue(result[1] is not None)
         self.assertEqual("f59a30e0a7e3348ef569225db1f4c29026aeac4350f8c6e751f669eddce0c718", result[1].hash)
-        self.assertIsNotNone(result[2])
+        self.assertTrue(result[2] is not None)
         self.assertEqual("9cd9c1d0ffcaebfcfe86bc2ae73b4e82a488de99c8e3faef92b05432bb94519c", result[2].hash)
 
     def test_mempoolWhenFull(self):
@@ -426,7 +424,7 @@ class TestNimiqClientMethods(unittest.TestCase):
 
         self.assertEqual("mempool", SessionStub.latestRequestMethod)
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual(3, result.total)
         self.assertEqual([1], result.buckets)
         self.assertEqual(3, result.transactionsPerBucket[1])
@@ -438,7 +436,7 @@ class TestNimiqClientMethods(unittest.TestCase):
 
         self.assertEqual("mempool", SessionStub.latestRequestMethod)
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual(0, result.total)
         self.assertEqual([], result.buckets)
         self.assertEqual(0, len(result.transactionsPerBucket))
@@ -633,14 +631,14 @@ class TestNimiqClientMethods(unittest.TestCase):
 
         self.assertEqual(3, len(result))
 
-        self.assertIsNotNone(result[0])
+        self.assertTrue(result[0] is not None)
         account = result[0]
         self.assertEqual("f925107376081be421f52d64bec775cc1fc20829", account.id)
         self.assertEqual("NQ33 Y4JH 0UTN 10DX 88FM 5MJB VHTM RGFU 4219", account.address)
         self.assertEqual(0, account.balance)
         self.assertEqual(AccountType.BASIC, account.type)
 
-        self.assertIsNotNone(result[1])
+        self.assertTrue(result[1] is not None)
         vesting = result[1]
         self.assertEqual("ebcbf0de7dae6a42d1c12967db9b2287bf2f7f0f", vesting.id)
         self.assertEqual("NQ09 VF5Y 1PKV MRM4 5LE1 55KV P6R2 GXYJ XYQF", vesting.address)
@@ -653,7 +651,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual(2625000000000, vesting.vestingStepAmount)
         self.assertEqual(52500000000000, vesting.vestingTotalAmount)
 
-        self.assertIsNotNone(result[2])
+        self.assertTrue(result[2] is not None)
         htlc = result[2]
         self.assertEqual("4974636bd6d34d52b7d4a2ee4425dc2be72a2b4e", htlc.id)
         self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", htlc.address)
@@ -676,7 +674,7 @@ class TestNimiqClientMethods(unittest.TestCase):
 
         self.assertEqual("createAccount", SessionStub.latestRequestMethod)
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual("b6edcc7924af5a05af6087959c7233ec2cf1a5db", result.id)
         self.assertEqual("NQ46 NTNU QX94 MVD0 BBT0 GXAR QUHK VGNF 39ET", result.address)
         self.assertEqual("4f6d35cc47b77bf696b6cce72217e52edff972855bd17396b004a8453b020747", result.publicKey)
@@ -803,7 +801,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", SessionStub.latestRequestParams[0])
         self.assertEqual(False, SessionStub.latestRequestParams[1])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual(11608, result.number)
         self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.hash)
         self.assertEqual(739224, result.confirmations)
@@ -821,14 +819,14 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", SessionStub.latestRequestParams[0])
         self.assertEqual(True, SessionStub.latestRequestParams[1])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual(11608, result.number)
         self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.hash)
         self.assertEqual(739501, result.confirmations)
 
         self.assertEqual(2, len(result.transactions))
-        self.assertIs(type(result.transactions[0]), Edict)
-        self.assertIs(type(result.transactions[1]), Edict)
+        self.assertTrue(type(result.transactions[0]) is NimiqDict)
+        self.assertTrue(type(result.transactions[1]) is NimiqDict)
 
     def test_getBlockByHashNotFound(self):
         SessionStub.testData = Fixtures.getBlockNotFound()
@@ -839,7 +837,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", SessionStub.latestRequestParams[0])
         self.assertEqual(False, SessionStub.latestRequestParams[1])
 
-        self.assertIsNone(result)
+        self.assertTrue(result is None)
 
     def test_getBlockByNumber(self):
         SessionStub.testData = Fixtures.getBlockFound()
@@ -850,7 +848,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual(11608, SessionStub.latestRequestParams[0])
         self.assertEqual(False, SessionStub.latestRequestParams[1])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual(11608, result.number)
         self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.hash)
         self.assertEqual(739224, result.confirmations)
@@ -868,14 +866,14 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual(11608, SessionStub.latestRequestParams[0])
         self.assertEqual(True, SessionStub.latestRequestParams[1])
 
-        self.assertIsNotNone(result)
+        self.assertTrue(result is not None)
         self.assertEqual(11608, result.number)
         self.assertEqual("bc3945d22c9f6441409a6e539728534a4fc97859bda87333071fad9dad942786", result.hash)
         self.assertEqual(739501, result.confirmations)
 
         self.assertEqual(2, len(result.transactions))
-        self.assertIs(type(result.transactions[0]), Edict)
-        self.assertIs(type(result.transactions[1]), Edict)
+        self.assertTrue(type(result.transactions[0]) is NimiqDict)
+        self.assertTrue(type(result.transactions[1]) is NimiqDict)
 
     def test_getBlockByNumberNotFound(self):
         SessionStub.testData = Fixtures.getBlockNotFound()
@@ -886,7 +884,7 @@ class TestNimiqClientMethods(unittest.TestCase):
         self.assertEqual(11608, SessionStub.latestRequestParams[0])
         self.assertEqual(False, SessionStub.latestRequestParams[1])
 
-        self.assertIsNone(result)
+        self.assertTrue(result is None)
 
     def test_constant(self):
         SessionStub.testData = Fixtures.constant()

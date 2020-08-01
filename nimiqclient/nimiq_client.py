@@ -1,6 +1,6 @@
 __all__ = [
     "NimiqClient",
-    "Edict",
+    "NimiqDict",
     "InternalErrorException",
     "RemoteErrorException",
     "ConnectionErrorException",
@@ -97,7 +97,7 @@ class RemoteErrorException(Exception):
     Exception on the remote server.
     """
     def __init__(self, message, code):
-        super(RemoteErrorException, self).__init__("{} ({})".format(message, code))
+        super(RemoteErrorException, self).__init__("{0} ({1})".format(message, code))
 
 class ConnectionErrorException(Exception):
     """
@@ -105,33 +105,33 @@ class ConnectionErrorException(Exception):
     """
     pass
 
-class Edict(dict):
+class NimiqDict(dict):
     """
     Enhanced dictionary to support dot notation in the client object responces.
     """
     def __init__(self, obj):
         for key, value in obj.items():
-            setattr(self, key, Edict.wrap(value))
+            setattr(self, key, NimiqDict.wrap(value))
 
     def __getattr__(self, attr):
         if attr.endswith("_"):
             attr = attr[:-1]
         if attr in self:
-            return super(Edict, self).__getitem__(attr)
+            return super(NimiqDict, self).__getitem__(attr)
         else:
             return None
 
     def __setattr__(self, key, value):
         if key.endswith("_"):
             key = key[:-1]
-        super(Edict, self).__setitem__(key, value)
+        super(NimiqDict, self).__setitem__(key, value)
 
     @staticmethod
     def wrap(obj):
         if isinstance(obj, dict):
-            return Edict(obj)
+            return NimiqDict(obj)
         elif isinstance(obj, (tuple, list, set, frozenset)):
-            return type(obj)([Edict.wrap(v) for v in obj])
+            return type(obj)([NimiqDict.wrap(v) for v in obj])
         else:
             return obj
 
@@ -151,7 +151,7 @@ class NimiqClient:
         :param session: Used to make all requests. If ommited the shared URLSession is used.
         """
         self.id = 0 # Number in the sequence for the of the next request.
-        self.url = "{}://{}:{}".format(scheme, host, port) # URL of the JSONRPC server.
+        self.url = "{0}://{1}:{2}".format(scheme, host, port) # URL of the JSONRPC server.
         self.auth = HTTPBasicAuth(user, password) # Base64 string containing authentication parameters.
         if session is None:
             session = requests.Session()
@@ -173,7 +173,7 @@ class NimiqClient:
             "id": self.id
         }
 
-        logger.info("Request: {}".format(call_object))
+        logger.info("Request: {0}".format(call_object))
 
         # make request
         try:
@@ -183,7 +183,7 @@ class NimiqClient:
                 auth = self.auth
             ).json()
 
-            logger.info("Response: {}".format(resp_object))
+            logger.info("Response: {0}".format(resp_object))
 
         # raise if there are any errors
         except Exception as error:
@@ -199,7 +199,7 @@ class NimiqClient:
         # increase the JSONRPC client request id for the next request
         self.id += 1
 
-        return Edict.wrap(resp_object.get("result"))
+        return NimiqDict.wrap(resp_object.get("result"))
 
     def accounts(self):
         """
