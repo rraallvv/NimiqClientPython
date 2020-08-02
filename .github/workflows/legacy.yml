@@ -26,8 +26,6 @@ jobs:
         default: "${{ matrix.python }}"
     - name: Install dependencies
       run: |
-        pip install --index-url=https://pypi.python.org/simple/ pip
-        pip install -U pip
         pip install -r requirements.txt
         pip install .
     - name: Run tests
