@@ -24,6 +24,7 @@ jobs:
       uses: gabrielfalcao/pyenv-action@v5
       with:
         default: "${{ matrix.python }}"
+        command: pip install -U pip
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
