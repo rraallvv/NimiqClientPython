@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@main
     - name: Install legacy python version
-      uses: gabrielfalcao/pyenv-action@main
+      uses: gabrielfalcao/pyenv-action@v5
       with:
         default: "${{ matrix.python }}"
     - name: Install dependencies
