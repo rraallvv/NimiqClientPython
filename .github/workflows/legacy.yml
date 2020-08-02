@@ -26,7 +26,6 @@ jobs:
         default: "${{ matrix.python }}"
     - name: Install dependencies
       run: |
-        pip install -U pip
         pip install -r requirements.txt
         pip install .
     - name: Run tests
