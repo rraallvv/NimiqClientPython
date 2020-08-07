@@ -19,6 +19,7 @@ jobs:
           #- 2.6.9
           #- 3.6.8
           - 3.7.5
+          - 3.8.0
 
     steps:
     - uses: actions/checkout@main
